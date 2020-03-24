@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_DACSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbConfiguration">
+          <Key>
+            <PropertyRef Name="con_id" />
+          </Key>
+          <Property Name="con_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="con_code" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="con_value" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="con_type" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbCuestionario">
+          <Key>
+            <PropertyRef Name="cue_id" />
+          </Key>
+          <Property Name="cue_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pac_id" Type="int" Nullable="false" />
+          <Property Name="cue_fecha" Type="datetime" Nullable="false" />
+          <Property Name="cue_diagnostico" Type="bit" Nullable="false" />
+          <Property Name="cue_latitud" Type="varchar" MaxLength="300" />
+          <Property Name="cue_longitud" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="tbCuestionarioPregunta">
+          <Key>
+            <PropertyRef Name="cue_id" />
+            <PropertyRef Name="pre_id" />
+          </Key>
+          <Property Name="cue_id" Type="int" Nullable="false" />
+          <Property Name="pre_id" Type="int" Nullable="false" />
+          <Property Name="cpr_respuesta" Type="bit" Nullable="false" />
+          <Property Name="cpr_comentario" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbPaciente">
+          <Key>
+            <PropertyRef Name="pac_id" />
+          </Key>
+          <Property Name="pac_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pac_dni" Type="int" Nullable="false" />
+          <Property Name="pac_genero" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="pac_nombre" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="pac_apellido" Type="varchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbPregunta">
+          <Key>
+            <PropertyRef Name="pre_id" />
+          </Key>
+          <Property Name="pre_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="pre_pregunta" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="pre_respuesta_positiva" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbRequest">
+          <Key>
+            <PropertyRef Name="req_id" />
+          </Key>
+          <Property Name="req_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="req_fecha_request" Type="datetime" Nullable="false" />
+          <Property Name="req_fecha_response" Type="datetime" />
+          <Property Name="req_body_request" Type="varchar(max)" Nullable="false" />
+          <Property Name="req_body_response" Type="varchar(max)" />
+          <Property Name="req_estado" Type="bit" Nullable="false" />
+          <Property Name="req_codigo" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbUsuario">
+          <Key>
+            <PropertyRef Name="usu_id" />
+          </Key>
+          <Property Name="usu_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="usu_usuario" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="usu_password" Type="varchar" MaxLength="500" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tbCuestionario_tbPaciente">
+          <End Role="tbPaciente" Type="Self.tbPaciente" Multiplicity="1" />
+          <End Role="tbCuestionario" Type="Self.tbCuestionario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPaciente">
+              <PropertyRef Name="pac_id" />
+            </Principal>
+            <Dependent Role="tbCuestionario">
+              <PropertyRef Name="pac_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbCuestionarioPregunta_tbCuestionario">
+          <End Role="tbCuestionario" Type="Self.tbCuestionario" Multiplicity="1" />
+          <End Role="tbCuestionarioPregunta" Type="Self.tbCuestionarioPregunta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbCuestionario">
+              <PropertyRef Name="cue_id" />
+            </Principal>
+            <Dependent Role="tbCuestionarioPregunta">
+              <PropertyRef Name="cue_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbCuestionarioPregunta_tbPregunta">
+          <End Role="tbPregunta" Type="Self.tbPregunta" Multiplicity="1" />
+          <End Role="tbCuestionarioPregunta" Type="Self.tbCuestionarioPregunta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPregunta">
+              <PropertyRef Name="pre_id" />
+            </Principal>
+            <Dependent Role="tbCuestionarioPregunta">
+              <PropertyRef Name="pre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="LoginByUsernamePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="DB_DACSModelStoreContainer">
+          <EntitySet Name="tbConfiguration" EntityType="Self.tbConfiguration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbCuestionario" EntityType="Self.tbCuestionario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbCuestionarioPregunta" EntityType="Self.tbCuestionarioPregunta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbPaciente" EntityType="Self.tbPaciente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbPregunta" EntityType="Self.tbPregunta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbRequest" EntityType="Self.tbRequest" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbUsuario" EntityType="Self.tbUsuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbCuestionario_tbPaciente" Association="Self.FK_tbCuestionario_tbPaciente">
+            <End Role="tbPaciente" EntitySet="tbPaciente" />
+            <End Role="tbCuestionario" EntitySet="tbCuestionario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbCuestionarioPregunta_tbCuestionario" Association="Self.FK_tbCuestionarioPregunta_tbCuestionario">
+            <End Role="tbCuestionario" EntitySet="tbCuestionario" />
+            <End Role="tbCuestionarioPregunta" EntitySet="tbCuestionarioPregunta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbCuestionarioPregunta_tbPregunta" Association="Self.FK_tbCuestionarioPregunta_tbPregunta">
+            <End Role="tbPregunta" EntitySet="tbPregunta" />
+            <End Role="tbCuestionarioPregunta" EntitySet="tbCuestionarioPregunta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_DACSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DB_DACSEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="LoginByUsernamePassword" ReturnType="Collection(DB_DACSModel.LoginByUsernamePassword_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="tbConfiguration" EntityType="DB_DACSModel.tbConfiguration" />
+          <EntitySet Name="tbRequest" EntityType="DB_DACSModel.tbRequest" />
+          <EntitySet Name="tbUsuario" EntityType="DB_DACSModel.tbUsuario" />
+          <EntitySet Name="tbCuestionario" EntityType="DB_DACSModel.tbCuestionario" />
+          <EntitySet Name="tbCuestionarioPregunta" EntityType="DB_DACSModel.tbCuestionarioPregunta" />
+          <EntitySet Name="tbPaciente" EntityType="DB_DACSModel.tbPaciente" />
+          <EntitySet Name="tbPregunta" EntityType="DB_DACSModel.tbPregunta" />
+          <AssociationSet Name="FK_tbCuestionario_tbPaciente" Association="DB_DACSModel.FK_tbCuestionario_tbPaciente">
+            <End Role="tbPaciente" EntitySet="tbPaciente" />
+            <End Role="tbCuestionario" EntitySet="tbCuestionario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbCuestionarioPregunta_tbCuestionario" Association="DB_DACSModel.FK_tbCuestionarioPregunta_tbCuestionario">
+            <End Role="tbCuestionario" EntitySet="tbCuestionario" />
+            <End Role="tbCuestionarioPregunta" EntitySet="tbCuestionarioPregunta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbCuestionarioPregunta_tbPregunta" Association="DB_DACSModel.FK_tbCuestionarioPregunta_tbPregunta">
+            <End Role="tbPregunta" EntitySet="tbPregunta" />
+            <End Role="tbCuestionarioPregunta" EntitySet="tbCuestionarioPregunta" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="LoginByUsernamePassword_Result">
+          <Property Type="Int32" Name="usu_id" Nullable="false" />
+          <Property Type="String" Name="usu_usuario" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="usu_password" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <EntityType Name="tbConfiguration">
+          <Key>
+            <PropertyRef Name="con_id" />
+          </Key>
+          <Property Name="con_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="con_code" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="con_value" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="con_type" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbRequest">
+          <Key>
+            <PropertyRef Name="req_id" />
+          </Key>
+          <Property Name="req_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="req_fecha_request" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="req_fecha_response" Type="DateTime" Precision="3" />
+          <Property Name="req_body_request" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="req_body_response" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="req_estado" Type="Boolean" Nullable="false" />
+          <Property Name="req_codigo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbUsuario">
+          <Key>
+            <PropertyRef Name="usu_id" />
+          </Key>
+          <Property Name="usu_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="usu_usuario" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="usu_password" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tbCuestionario">
+          <Key>
+            <PropertyRef Name="cue_id" />
+          </Key>
+          <Property Name="cue_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pac_id" Type="Int32" Nullable="false" />
+          <Property Name="cue_fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cue_diagnostico" Type="Boolean" Nullable="false" />
+          <Property Name="cue_latitud" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="cue_longitud" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbPaciente" Relationship="DB_DACSModel.FK_tbCuestionario_tbPaciente" FromRole="tbCuestionario" ToRole="tbPaciente" />
+          <NavigationProperty Name="tbCuestionarioPregunta" Relationship="DB_DACSModel.FK_tbCuestionarioPregunta_tbCuestionario" FromRole="tbCuestionario" ToRole="tbCuestionarioPregunta" />
+        </EntityType>
+        <EntityType Name="tbCuestionarioPregunta">
+          <Key>
+            <PropertyRef Name="cue_id" />
+            <PropertyRef Name="pre_id" />
+          </Key>
+          <Property Name="cue_id" Type="Int32" Nullable="false" />
+          <Property Name="pre_id" Type="Int32" Nullable="false" />
+          <Property Name="cpr_respuesta" Type="Boolean" Nullable="false" />
+          <Property Name="cpr_comentario" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbCuestionario" Relationship="DB_DACSModel.FK_tbCuestionarioPregunta_tbCuestionario" FromRole="tbCuestionarioPregunta" ToRole="tbCuestionario" />
+          <NavigationProperty Name="tbPregunta" Relationship="DB_DACSModel.FK_tbCuestionarioPregunta_tbPregunta" FromRole="tbCuestionarioPregunta" ToRole="tbPregunta" />
+        </EntityType>
+        <EntityType Name="tbPaciente">
+          <Key>
+            <PropertyRef Name="pac_id" />
+          </Key>
+          <Property Name="pac_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pac_dni" Type="Int32" Nullable="false" />
+          <Property Name="pac_genero" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pac_nombre" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="pac_apellido" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbCuestionario" Relationship="DB_DACSModel.FK_tbCuestionario_tbPaciente" FromRole="tbPaciente" ToRole="tbCuestionario" />
+        </EntityType>
+        <EntityType Name="tbPregunta">
+          <Key>
+            <PropertyRef Name="pre_id" />
+          </Key>
+          <Property Name="pre_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pre_pregunta" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pre_respuesta_positiva" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tbCuestionarioPregunta" Relationship="DB_DACSModel.FK_tbCuestionarioPregunta_tbPregunta" FromRole="tbPregunta" ToRole="tbCuestionarioPregunta" />
+        </EntityType>
+        <Association Name="FK_tbCuestionario_tbPaciente">
+          <End Type="DB_DACSModel.tbPaciente" Role="tbPaciente" Multiplicity="1" />
+          <End Type="DB_DACSModel.tbCuestionario" Role="tbCuestionario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPaciente">
+              <PropertyRef Name="pac_id" />
+            </Principal>
+            <Dependent Role="tbCuestionario">
+              <PropertyRef Name="pac_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbCuestionarioPregunta_tbCuestionario">
+          <End Type="DB_DACSModel.tbCuestionario" Role="tbCuestionario" Multiplicity="1" />
+          <End Type="DB_DACSModel.tbCuestionarioPregunta" Role="tbCuestionarioPregunta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbCuestionario">
+              <PropertyRef Name="cue_id" />
+            </Principal>
+            <Dependent Role="tbCuestionarioPregunta">
+              <PropertyRef Name="cue_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbCuestionarioPregunta_tbPregunta">
+          <End Type="DB_DACSModel.tbPregunta" Role="tbPregunta" Multiplicity="1" />
+          <End Type="DB_DACSModel.tbCuestionarioPregunta" Role="tbCuestionarioPregunta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbPregunta">
+              <PropertyRef Name="pre_id" />
+            </Principal>
+            <Dependent Role="tbCuestionarioPregunta">
+              <PropertyRef Name="pre_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_DACSModelStoreContainer" CdmEntityContainer="DB_DACSEntities">
+          <FunctionImportMapping FunctionImportName="LoginByUsernamePassword" FunctionName="DB_DACSModel.Store.LoginByUsernamePassword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_DACSModel.LoginByUsernamePassword_Result">
+                <ScalarProperty Name="usu_id" ColumnName="usu_id" />
+                <ScalarProperty Name="usu_usuario" ColumnName="usu_usuario" />
+                <ScalarProperty Name="usu_password" ColumnName="usu_password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="tbConfiguration">
+            <EntityTypeMapping TypeName="DB_DACSModel.tbConfiguration">
+              <MappingFragment StoreEntitySet="tbConfiguration">
+                <ScalarProperty Name="con_type" ColumnName="con_type" />
+                <ScalarProperty Name="con_value" ColumnName="con_value" />
+                <ScalarProperty Name="con_code" ColumnName="con_code" />
+                <ScalarProperty Name="con_id" ColumnName="con_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbRequest">
+            <EntityTypeMapping TypeName="DB_DACSModel.tbRequest">
+              <MappingFragment StoreEntitySet="tbRequest">
+                <ScalarProperty Name="req_codigo" ColumnName="req_codigo" />
+                <ScalarProperty Name="req_estado" ColumnName="req_estado" />
+                <ScalarProperty Name="req_body_response" ColumnName="req_body_response" />
+                <ScalarProperty Name="req_body_request" ColumnName="req_body_request" />
+                <ScalarProperty Name="req_fecha_response" ColumnName="req_fecha_response" />
+                <ScalarProperty Name="req_fecha_request" ColumnName="req_fecha_request" />
+                <ScalarProperty Name="req_id" ColumnName="req_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbUsuario">
+            <EntityTypeMapping TypeName="DB_DACSModel.tbUsuario">
+              <MappingFragment StoreEntitySet="tbUsuario">
+                <ScalarProperty Name="usu_password" ColumnName="usu_password" />
+                <ScalarProperty Name="usu_usuario" ColumnName="usu_usuario" />
+                <ScalarProperty Name="usu_id" ColumnName="usu_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbCuestionario">
+            <EntityTypeMapping TypeName="DB_DACSModel.tbCuestionario">
+              <MappingFragment StoreEntitySet="tbCuestionario">
+                <ScalarProperty Name="cue_longitud" ColumnName="cue_longitud" />
+                <ScalarProperty Name="cue_latitud" ColumnName="cue_latitud" />
+                <ScalarProperty Name="cue_diagnostico" ColumnName="cue_diagnostico" />
+                <ScalarProperty Name="cue_fecha" ColumnName="cue_fecha" />
+                <ScalarProperty Name="pac_id" ColumnName="pac_id" />
+                <ScalarProperty Name="cue_id" ColumnName="cue_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbCuestionarioPregunta">
+            <EntityTypeMapping TypeName="DB_DACSModel.tbCuestionarioPregunta">
+              <MappingFragment StoreEntitySet="tbCuestionarioPregunta">
+                <ScalarProperty Name="cpr_comentario" ColumnName="cpr_comentario" />
+                <ScalarProperty Name="cpr_respuesta" ColumnName="cpr_respuesta" />
+                <ScalarProperty Name="pre_id" ColumnName="pre_id" />
+                <ScalarProperty Name="cue_id" ColumnName="cue_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbPaciente">
+            <EntityTypeMapping TypeName="DB_DACSModel.tbPaciente">
+              <MappingFragment StoreEntitySet="tbPaciente">
+                <ScalarProperty Name="pac_apellido" ColumnName="pac_apellido" />
+                <ScalarProperty Name="pac_nombre" ColumnName="pac_nombre" />
+                <ScalarProperty Name="pac_genero" ColumnName="pac_genero" />
+                <ScalarProperty Name="pac_dni" ColumnName="pac_dni" />
+                <ScalarProperty Name="pac_id" ColumnName="pac_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbPregunta">
+            <EntityTypeMapping TypeName="DB_DACSModel.tbPregunta">
+              <MappingFragment StoreEntitySet="tbPregunta">
+                <ScalarProperty Name="pre_respuesta_positiva" ColumnName="pre_respuesta_positiva" />
+                <ScalarProperty Name="pre_pregunta" ColumnName="pre_pregunta" />
+                <ScalarProperty Name="pre_id" ColumnName="pre_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

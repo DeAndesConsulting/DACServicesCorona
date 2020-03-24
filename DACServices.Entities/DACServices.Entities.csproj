@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{49B1B20B-5FC2-41C2-8724-F7400EE4F4B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DACServices.Entities</RootNamespace>
+    <AssemblyName>DACServices.Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Test|AnyCPU'">
+    <OutputPath>bin\Test\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ItrisAuthenticateEntity.cs" />
+    <Compile Include="Service\DB_DACSModel.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Service\Entities\ServiceSyncBaseEntity.cs" />
+    <Compile Include="Service\LoginByUsernamePassword_Result.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\tbConfiguration.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\tbCuestionario.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\tbCuestionarioPregunta.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\tbPaciente.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\tbPregunta.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\tbRequest.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\tbUsuario.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tbCuestionario.cs" />
+    <Compile Include="tbCuestionarioPregunta.cs" />
+    <Compile Include="tbPaciente.cs" />
+    <Compile Include="tbPregunta.cs" />
+    <Compile Include="tbRequest.cs" />
+    <Compile Include="Vendor\Clases\ItrisArticuloEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisComercioEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisErpAsesoresEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisErpEmpresasEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisErpLocalidadesEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisEstadoEmailRelevamientoEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisPlanillaEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisRelevamientoArticuloEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisRelevamientoEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisTipoDeArticuloEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisTipoDeComercioEntity.cs" />
+    <Compile Include="Vendor\Request\ItrisArticuloRequest.cs" />
+    <Compile Include="Vendor\Request\ItrisComercioRequest.cs" />
+    <Compile Include="Vendor\Request\ItrisErpAsesoresRequest.cs" />
+    <Compile Include="Vendor\Request\ItrisErpEmpresasRequest.cs" />
+    <Compile Include="Vendor\Request\ItrisErpLocalidadesRequest.cs" />
+    <Compile Include="Vendor\Request\ItrisEstadoEmailRelevamientoRequest.cs" />
+    <Compile Include="Vendor\Request\ItrisRelevamientoArticuloRequest.cs" />
+    <Compile Include="Vendor\Request\ItrisRelevamientoRequest.cs" />
+    <Compile Include="Vendor\Request\ItrisRequest.cs" />
+    <Compile Include="Vendor\Request\ItrisTipoDeArticuloRequest.cs" />
+    <Compile Include="Vendor\Request\LoginItrisRequestEntity.cs" />
+    <Compile Include="Vendor\Request\TipoDeComercioRequest.cs" />
+    <Compile Include="Vendor\Response\ItrisArticuloResponse.cs" />
+    <Compile Include="Vendor\Response\ItrisComercioResponse.cs" />
+    <Compile Include="Vendor\Response\ItrisErpAsesoresResponse.cs" />
+    <Compile Include="Vendor\Response\ItrisErpEmpresasResponse.cs" />
+    <Compile Include="Vendor\Response\ItrisErpLocalidadesResponse.cs" />
+    <Compile Include="Vendor\Response\ItrisEstadoEmailRelevamientoResponse.cs" />
+    <Compile Include="Vendor\Response\ItrisRelevamientoArticuloResponse.cs" />
+    <Compile Include="Vendor\Response\ItrisRelevamientoResponse.cs" />
+    <Compile Include="Vendor\Response\ItrisResponse.cs" />
+    <Compile Include="Vendor\Response\ItrisTipoDeArticuloResponse.cs" />
+    <Compile Include="Vendor\Response\LoginItrisResponseEntity.cs" />
+    <Compile Include="Vendor\Response\ItrisTipoDeComercioResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Service\DB_DACSModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DB_DACSModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
