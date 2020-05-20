@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DACServices.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace DACServices.Repositories.Service
 {
-	public class ServiceBaseRepository<E> where E : class, new()
+	//public class ServiceBaseRepository<E> where E : class, new()
+	public class ServiceBaseRepository<E> : IServiceBaseRepository<E> where E : class, new()
 	{
 		private E result;
 		private List<E> listaResult = null;
 
-		public object Create(E entity)
+		//public object Create(E entity)
+		public E Create(E entity)
 		{
 			try
 			{
@@ -63,7 +66,8 @@ namespace DACServices.Repositories.Service
 			}
 		}
 
-		public object Update(E entity)
+		//public object Update(E entity)
+		public E Update(E entity)
 		{
 			try
 			{

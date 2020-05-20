@@ -9,9 +9,9 @@ namespace DACServices.Interfaces
 	public interface IServiceBaseRepository<E> where E: class, new()
 	{
 		E Create(E entity);
+		object Read();
+		object Read(Func<E, bool> predicate);
 		E Update(E entity);
-		bool Delete(E entity);
-		object Get();
-		object GetByFilter(Func<E, bool> predicate);
+		object Delete(E entity);
 	}
 }

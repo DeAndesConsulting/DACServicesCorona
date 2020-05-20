@@ -84,6 +84,7 @@
     <Compile Include="tbPaciente.cs" />
     <Compile Include="tbPregunta.cs" />
     <Compile Include="tbRequest.cs" />
+    <Compile Include="tbUsuario.cs" />
     <Compile Include="Vendor\Clases\ItrisArticuloEntity.cs" />
     <Compile Include="Vendor\Clases\ItrisComercioEntity.cs" />
     <Compile Include="Vendor\Clases\ItrisErpAsesoresEntity.cs" />
