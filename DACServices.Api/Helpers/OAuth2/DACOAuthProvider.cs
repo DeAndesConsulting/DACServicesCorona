@@ -38,11 +38,20 @@ namespace DACServices.Api.Helpers.OAuth2
             string usernameVal = context.UserName;
             string passwordVal = context.Password;
 
-            //Valido usuario y password
-            var user = this.databaseManager.LoginByUsernamePassword(usernameVal, passwordVal).ToList();
+			//Valido usuario y password - Funciona OK, se comenta para evitar gastos
+			//var user = this.databaseManager.LoginByUsernamePassword(usernameVal, passwordVal).ToList();
 
-            //Valído
-            if(user == null || user.Count() <= 0)
+			//HC user para que no me rompan en bolsillo con la bd
+			var user = new List<Entities.tbUsuario>();
+			if (!string.IsNullOrEmpty(usernameVal) && !string.IsNullOrEmpty(passwordVal))
+			{
+				if (usernameVal == "mock" && passwordVal == "mock")
+					user.Add(new Entities.tbUsuario() { usu_id = 1, usu_usuario = "mock", usu_password = "mock" });
+			}
+			//HC user
+
+			//Valído
+			if (user == null || user.Count() <= 0)
             {
                 context.SetError("invalid_grant", "The username or password is incorrect");
                 return;
