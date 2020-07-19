@@ -1,5 +1,6 @@
 ﻿using DACServices.Business.Service;
 using DACServices.Entities;
+using DACServices.Mock;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -14,14 +15,19 @@ namespace DACServices.Api.Controllers
     {
 		private ILog log = LogManager.GetLogger(typeof(ServiceUsuarioController));
 		ServiceUsuarioBusiness serviceUsuarioBusiness = new ServiceUsuarioBusiness();
+        private List<tbUsuario> listaUsuariosMock = UsuarioMock.Instancia().GetListaUsuarios();
 
 		[HttpGet]
 		public object Get(int id)
 		{
 			try
 			{
-				Func<tbUsuario, bool> predicado = x => x.usu_id == id;
-				var result = serviceUsuarioBusiness.Read(predicado);
+				//Funcionando OK
+				//Func<tbUsuario, bool> predicado = x => x.usu_id == id;
+				//var result = serviceUsuarioBusiness.Read(predicado);
+
+				//Retorno del mock de datos
+				var result = UsuarioMock.Instancia().GetUsuario(id);
 
 				if (result != null)
 					return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -42,7 +48,9 @@ namespace DACServices.Api.Controllers
 		{
 			try
 			{
-				var result = serviceUsuarioBusiness.Read();
+                //Funcionando OK, se va a utilizar el mock de datos para bajar costos
+				//var result = serviceUsuarioBusiness.Read();
+                var result = listaUsuariosMock;
 
 				if (result != null)
 					return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -63,7 +71,11 @@ namespace DACServices.Api.Controllers
 		{
 			try
 			{
-				var result = serviceUsuarioBusiness.Create(usuario) as tbUsuario;
+				//Funciona OK con la BD
+				//var result = serviceUsuarioBusiness.Create(usuario) as tbUsuario;
+
+				//Se utiliza mock de datos
+				var result = UsuarioMock.Instancia().CreateUsuario(usuario);
 
 				if (result.usu_id != 0)
 					return Request.CreateResponse(HttpStatusCode.Created, result);
@@ -84,7 +96,11 @@ namespace DACServices.Api.Controllers
 		{
 			try
 			{
-				var result = serviceUsuarioBusiness.Update(usuario) as tbUsuario;
+				//Funcionando OK con BD
+				//var result = serviceUsuarioBusiness.Update(usuario) as tbUsuario;
+
+				//Se utiliza mock de datos
+				var result = UsuarioMock.Instancia().Update(usuario);
 
 				if (result != null)
 					return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -106,7 +122,12 @@ namespace DACServices.Api.Controllers
 			try
 			{
 				tbUsuario usuario = new tbUsuario() { usu_id = id };
-				var result = serviceUsuarioBusiness.Delete(usuario) as tbUsuario;
+
+				//Funcionando OK con la BD se usa mock
+				//var result = serviceUsuarioBusiness.Delete(usuario) as tbUsuario;
+
+				//Mock de usuarios
+				var result = UsuarioMock.Instancia().Delete(usuario);
 
 				if (result != null)
 					return Request.CreateResponse(HttpStatusCode.OK, result);

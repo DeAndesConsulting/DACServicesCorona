@@ -240,6 +240,10 @@
       <Project>{49b1b20b-5fc2-41c2-8724-f7400ee4f4b2}</Project>
       <Name>DACServices.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DACServices.Mock\DACServices.Mock.csproj">
+      <Project>{776156df-0b69-4142-8d93-be465007c133}</Project>
+      <Name>DACServices.Mock</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DACServices.Repositories\DACServices.Repositories.csproj">
       <Project>{674E6A11-A840-4A4A-844D-B440B0E1AB16}</Project>
       <Name>DACServices.Repositories</Name>
