@@ -198,6 +198,7 @@
     <Compile Include="Controllers\ServicePreguntaController.cs" />
     <Compile Include="Controllers\ServiceSecurityUsuarioController.cs" />
     <Compile Include="Controllers\ServiceUsuarioController.cs" />
+    <Compile Include="Controllers\ServiceUsuarioMenuController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\ItrisTipoDeArticuloController.cs" />
     <Compile Include="Controllers\ItrisTipoDeComercioController.cs" />
@@ -208,6 +209,7 @@
     <Compile Include="Helpers\OAuth2\DACOAuthProvider.cs" />
     <Compile Include="Models\FormularioModel.cs" />
     <Compile Include="Models\RelevamientoModel.cs" />
+    <Compile Include="Models\UsuarioMenuModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
