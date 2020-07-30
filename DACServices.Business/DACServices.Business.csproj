@@ -66,6 +66,7 @@
     <Compile Include="Vendor\ItrisRelevamientoBusiness.cs" />
     <Compile Include="Vendor\ItrisTipoDeArticuloBusiness.cs" />
     <Compile Include="Vendor\ItrisTipoDeComercioBusiness.cs" />
+    <Compile Include="Vendor\NPS\NpsBusiness.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DACServices.Entities\DACServices.Entities.csproj">

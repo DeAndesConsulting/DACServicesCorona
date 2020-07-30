@@ -52,6 +52,7 @@
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\NpsService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="DB_DACSModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,6 +100,11 @@
     <Compile Include="Vendor\ItrisSessionRepository.cs" />
     <Compile Include="Vendor\ItrisTipoDeArticuloRepository.cs" />
     <Compile Include="Vendor\ItrisTipoDeComercioRepository.cs" />
+    <Compile Include="Vendor\NpsVendor\Model\NpsModel.cs" />
+    <Compile Include="Vendor\NpsVendor\Payment\NpsPaymentForm.cs" />
+    <Compile Include="Vendor\NpsVendor\Security\NpsEncryptFields.cs" />
+    <Compile Include="Vendor\NpsVendor\Security\NpsHash.cs" />
+    <Compile Include="Vendor\NpsVendor\Security\NpsTypeEncrypt.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DACServices.Entities\DACServices.Entities.csproj">
@@ -111,6 +122,112 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DB_DACSModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_Authorize_2p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_Authorize_3p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_BankPayment_2p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_BankPayment_3p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_Capture.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_CashPayment_3p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_ChangeSecretKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_CreateClientSession.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_CreateCustomer.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_CreatePaymentMethod.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_CreatePaymentMethodFromPayment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_CreatePaymentMethodToken.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_DeleteCustomer.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_DeletePaymentMethod.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_FraudScreening.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_GetIINDetails.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_GetInstallmentsOptions.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_NotifyFraudScreeningReview.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_PayOnLine_2p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_PayOnLine_3p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_QueryCardDetails.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_QueryCardNumber.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_QueryTxs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_RecachePaymentMethodToken.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_Refund.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_RetrieveCustomer.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_RetrievePaymentMethod.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_RetrievePaymentMethodToken.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_SimpleQueryTx.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_SplitAuthorize_2p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_SplitAuthorize_3p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_SplitPayOnLine_2p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_SplitPayOnLine_3p.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_UpdateCustomer.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\DACServices.Repositories.NpsService.RespuestaStruct_UpdatePaymentMethod.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\NpsService\ws.wsdl" />
     <None Include="DB_DACSModel.edmx.diagram">
       <DependentUpon>DB_DACSModel.edmx</DependentUpon>
     </None>
@@ -120,10 +237,23 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\NpsService\configuration91.svcinfo" />
+    <None Include="Connected Services\NpsService\configuration.svcinfo" />
+    <None Include="Connected Services\NpsService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="DB_DACSModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>DB_DACSModel.Context.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\NpsService\" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
