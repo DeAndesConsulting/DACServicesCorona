@@ -195,6 +195,7 @@
     <Compile Include="Controllers\ServiceBaseController.cs" />
     <Compile Include="Controllers\ServiceFormularioController.cs" />
     <Compile Include="Controllers\ServicePacienteController.cs" />
+    <Compile Include="Controllers\ServicePaymentFormController.cs" />
     <Compile Include="Controllers\ServicePreguntaController.cs" />
     <Compile Include="Controllers\ServiceSecurityUsuarioController.cs" />
     <Compile Include="Controllers\ServiceUsuarioController.cs" />
@@ -209,6 +210,7 @@
     <Compile Include="Helpers\OAuth2\CustomRoles.cs" />
     <Compile Include="Helpers\OAuth2\DACOAuthProvider.cs" />
     <Compile Include="Models\FormularioModel.cs" />
+    <Compile Include="Models\ServicePaymentFormModel.cs" />
     <Compile Include="Models\RelevamientoModel.cs" />
     <Compile Include="Models\UsuarioMenuModel.cs" />
     <Compile Include="Models\VendorPaymentFormModel.cs" />
