@@ -57,6 +57,9 @@
     <Compile Include="Service\LoginByUsernamePassword_Result.cs">
       <DependentUpon>DB_DACSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Service\tbComercio.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Service\tbConfiguration.cs">
       <DependentUpon>DB_DACSModel.tt</DependentUpon>
     </Compile>
@@ -69,16 +72,28 @@
     <Compile Include="Service\tbPaciente.cs">
       <DependentUpon>DB_DACSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Service\tbPayment.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\tbPaymentDetail.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Service\tbPregunta.cs">
       <DependentUpon>DB_DACSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Service\tbRequest.cs">
       <DependentUpon>DB_DACSModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Service\tbRequestPaymentVendor.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Service\tbUsuario.cs">
       <DependentUpon>DB_DACSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\tbVendor.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbCuestionario.cs" />
     <Compile Include="tbCuestionarioPregunta.cs" />
     <Compile Include="tbPaciente.cs" />

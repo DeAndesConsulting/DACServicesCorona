@@ -12,21 +12,23 @@ namespace DACServices.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class tbUsuario
+    public partial class tbPayment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tbUsuario()
+        public tbPayment()
         {
-            this.tbPayment = new HashSet<tbPayment>();
+            this.tbPaymentDetail = new HashSet<tbPaymentDetail>();
         }
     
+        public int pay_id { get; set; }
         public int usu_id { get; set; }
-        public Nullable<int> com_id { get; set; }
-        public string usu_usuario { get; set; }
-        public string usu_password { get; set; }
+        public string pay_url_formulario { get; set; }
+        public string pay_email_to { get; set; }
+        public bool pay_estado { get; set; }
+        public System.DateTime pay_fecha { get; set; }
     
-        public virtual tbComercio tbComercio { get; set; }
+        public virtual tbUsuario tbUsuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbPayment> tbPayment { get; set; }
+        public virtual ICollection<tbPaymentDetail> tbPaymentDetail { get; set; }
     }
 }

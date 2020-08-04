@@ -5,17 +5,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="96e2afc90f29414db078a7c5ca96c948" Name="Diagram1">
-        <EntityTypeShape EntityType="DB_DACSModel.tbConfiguration" Width="1.5" PointX="0.5" PointY="0.5" />
-        <EntityTypeShape EntityType="DB_DACSModel.tbRequest" Width="1.5" PointX="4.375" PointY="0.5" />
-        <EntityTypeShape EntityType="DB_DACSModel.tbUsuario" Width="1.5" PointX="2.375" PointY="0.5" />
-        <EntityTypeShape EntityType="DB_DACSModel.tbCuestionario" Width="1.5" PointX="3" PointY="4" />
-        <EntityTypeShape EntityType="DB_DACSModel.tbCuestionarioPregunta" Width="2" PointX="4.875" PointY="7.25" />
-        <EntityTypeShape EntityType="DB_DACSModel.tbPaciente" Width="1.5" PointX="0.75" PointY="4.125" />
-        <EntityTypeShape EntityType="DB_DACSModel.tbPregunta" Width="1.5" PointX="7.5" PointY="5" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbComercio" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbConfiguration" Width="1.5" PointX="7.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbCuestionario" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbCuestionarioPregunta" Width="1.5" PointX="5.25" PointY="5.125" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbPaciente" Width="1.5" PointX="0.75" PointY="5.125" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbPayment" Width="1.5" PointX="7.5" PointY="1" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbPaymentDetail" Width="1.5" PointX="9.75" PointY="1" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbPregunta" Width="1.5" PointX="3" PointY="8.375" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbRequest" Width="1.5" PointX="7.75" PointY="7.75" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbRequestPaymentVendor" Width="1.5" PointX="12" PointY="1.125" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbUsuario" Width="1.5" PointX="5.25" PointY="1.125" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbVendor" Width="1.5" PointX="0.75" PointY="1.375" />
+        <AssociationConnector Association="DB_DACSModel.FK_tbComercio_tbVendor" />
+        <AssociationConnector Association="DB_DACSModel.FK_tbUsuario_tbComercio" />
         <AssociationConnector Association="DB_DACSModel.FK_tbCuestionario_tbPaciente" />
         <AssociationConnector Association="DB_DACSModel.FK_tbCuestionarioPregunta_tbCuestionario" />
         <AssociationConnector Association="DB_DACSModel.FK_tbCuestionarioPregunta_tbPregunta" />
-        </Diagram>
+        <AssociationConnector Association="DB_DACSModel.FK_tbPayment_tbUsuario" />
+        <AssociationConnector Association="DB_DACSModel.FK_tbPaymentDetail_tbPayment" />
+        <AssociationConnector Association="DB_DACSModel.FK_tbRequestPaymentVendor_tbPaymentDetail" />
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>
