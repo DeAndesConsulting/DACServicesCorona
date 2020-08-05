@@ -11,6 +11,8 @@ namespace DACServices.Repositories.Vendor.NpsVendor.Model
 		public string psp_TransactionId { get; set; }
 		public string psp_MerchTxRef { get; set; }
 		public string psp_Amount { get; set; }
+		public string psp_Product { get; set; }
+		public string psp_NumPayments { get; set; }
 		public string psp_CustomerId { get; set; }
 		public string psp_AccountID { get; set; }
 		public string psp_PaymentMethodTag { get; set; }

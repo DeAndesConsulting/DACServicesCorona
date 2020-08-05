@@ -1,4 +1,5 @@
 ﻿using DACServices.Api.Models;
+using DACServices.Business.Service;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,17 @@ namespace DACServices.Api.Controllers
     public class ServicePaymentFormController : ApiController
     {
 		ILog log = LogManager.GetLogger(typeof(ServicePaymentFormController));
-		
+
 		public object Post(ServicePaymentFormModel model)
 		{
 			try
 			{
+				ServicePaymentFormBusiness paymentFormBusiness =
+					new ServicePaymentFormBusiness(model.UserName, model.Descripcion, model.Monto, model.Producto,
+						model.Cuotas, model.Email);
+
+				paymentFormBusiness.GenerarFormularioDePago();
+
 				var sarasa = model.Cuotas;
 
 				model.idPayment = "1";

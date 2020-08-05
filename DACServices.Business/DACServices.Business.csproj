@@ -53,6 +53,7 @@
     <Compile Include="Service\ServicePacienteBusiness.cs" />
     <Compile Include="Service\ServicePaymentBusiness.cs" />
     <Compile Include="Service\ServicePaymentDetailBusiness.cs" />
+    <Compile Include="Service\ServicePaymentFormBusiness.cs" />
     <Compile Include="Service\ServicePreguntaBusiness.cs" />
     <Compile Include="Service\ServiceRelevamientoBusiness.cs" />
     <Compile Include="Service\ServiceRequestBusiness.cs" />

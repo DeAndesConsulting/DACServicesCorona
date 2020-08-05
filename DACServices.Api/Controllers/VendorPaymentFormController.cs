@@ -20,7 +20,7 @@ namespace DACServices.Api.Controllers
 			try
 			{
 				NpsBusiness npsBusiness = new NpsBusiness();
-				string result = npsBusiness.CreateForm(model.merchantTransactionReference, model.amount);
+				string result = npsBusiness.CreateForm(0, 1000, 14, 6, new Entities.tbPaymentDetail());
 
 				if (result != null)
 				{
