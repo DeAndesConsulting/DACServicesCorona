@@ -13,7 +13,9 @@ namespace DACServices.Api.Models
 		public int Producto { get; set; }
 		public int Cuotas { get; set; }
 		public string Email { get; set; }
-		public string idPayment { get; set; }
-		public string urlForm { get; set; }
+		public int IdPayment { get; set; }
+		public string UrlForm { get; set; }
+		public int CantidadEmailsEnviados { get; set; }
+		public bool EstadoDelPago { get; set; }
 	}
 }

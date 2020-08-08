@@ -23,14 +23,16 @@ namespace DACServices.Api.Controllers
 					new ServicePaymentFormBusiness(model.UserName, model.Descripcion, model.Monto, model.Producto,
 						model.Cuotas, model.Email);
 
-				paymentFormBusiness.GenerarFormularioDePago();
+				var payment = paymentFormBusiness.GenerarFormularioDePago();
 
-				var sarasa = model.Cuotas;
+				model.IdPayment = payment.pay_id;
+				model.UrlForm = payment.pay_url_formulario;
+				model.CantidadEmailsEnviados = payment.pay_cantidad_mails_enviados;
 
-				model.idPayment = "1";
-				model.urlForm = "http://sarasa";
+				if (!string.IsNullOrEmpty(model.UrlForm))
+					return Request.CreateResponse(HttpStatusCode.Created, model);
 
-				return Request.CreateResponse(HttpStatusCode.Created, model);
+				return Request.CreateResponse(HttpStatusCode.Conflict);
 			}
 			catch (Exception ex)
 			{

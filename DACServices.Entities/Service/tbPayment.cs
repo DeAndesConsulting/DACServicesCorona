@@ -24,7 +24,8 @@ namespace DACServices.Entities
         public int usu_id { get; set; }
         public string pay_url_formulario { get; set; }
         public string pay_email_to { get; set; }
-        public bool pay_estado { get; set; }
+        public int pay_cantidad_mails_enviados { get; set; }
+        public bool pay_estado_pago { get; set; }
         public System.DateTime pay_fecha { get; set; }
     
         public virtual tbUsuario tbUsuario { get; set; }

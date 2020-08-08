@@ -64,7 +64,8 @@
           <Property Name="usu_id" Type="int" Nullable="false" />
           <Property Name="pay_url_formulario" Type="varchar" MaxLength="500" />
           <Property Name="pay_email_to" Type="varchar" MaxLength="300" Nullable="false" />
-          <Property Name="pay_estado" Type="bit" Nullable="false" />
+          <Property Name="pay_cantidad_mails_enviados" Type="int" Nullable="false" />
+          <Property Name="pay_estado_pago" Type="bit" Nullable="false" />
           <Property Name="pay_fecha" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tbPaymentDetail">
@@ -396,7 +397,8 @@
           <Property Name="usu_id" Type="Int32" Nullable="false" />
           <Property Name="pay_url_formulario" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="pay_email_to" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
-          <Property Name="pay_estado" Type="Boolean" Nullable="false" />
+          <Property Name="pay_cantidad_mails_enviados" Type="Int32" Nullable="false" />
+          <Property Name="pay_estado_pago" Type="Boolean" Nullable="false" />
           <Property Name="pay_fecha" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="tbUsuario" Relationship="DB_DACSModel.FK_tbPayment_tbUsuario" FromRole="tbPayment" ToRole="tbUsuario" />
           <NavigationProperty Name="tbPaymentDetail" Relationship="DB_DACSModel.FK_tbPaymentDetail_tbPayment" FromRole="tbPayment" ToRole="tbPaymentDetail" />
@@ -636,7 +638,8 @@
             <EntityTypeMapping TypeName="DB_DACSModel.tbPayment">
               <MappingFragment StoreEntitySet="tbPayment">
                 <ScalarProperty Name="pay_fecha" ColumnName="pay_fecha" />
-                <ScalarProperty Name="pay_estado" ColumnName="pay_estado" />
+                <ScalarProperty Name="pay_estado_pago" ColumnName="pay_estado_pago" />
+                <ScalarProperty Name="pay_cantidad_mails_enviados" ColumnName="pay_cantidad_mails_enviados" />
                 <ScalarProperty Name="pay_email_to" ColumnName="pay_email_to" />
                 <ScalarProperty Name="pay_url_formulario" ColumnName="pay_url_formulario" />
                 <ScalarProperty Name="usu_id" ColumnName="usu_id" />

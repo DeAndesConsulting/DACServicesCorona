@@ -83,6 +83,7 @@
     <Compile Include="Service\ServiceConfigurationRepository.cs" />
     <Compile Include="Service\ServiceCuestionarioPreguntaRepository.cs" />
     <Compile Include="Service\ServiceCuestionarioRepository.cs" />
+    <Compile Include="Service\ServiceMailingRepository.cs" />
     <Compile Include="Service\ServicePacienteRepository.cs" />
     <Compile Include="Service\ServicePaymentDetailRepository.cs" />
     <Compile Include="Service\ServicePaymentRepository.cs" />

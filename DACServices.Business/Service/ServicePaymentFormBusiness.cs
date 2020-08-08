@@ -10,7 +10,7 @@ namespace DACServices.Business.Service
 {
 	public class ServicePaymentFormBusiness
 	{
-		private string _userName { get;}
+		private string _userName { get; }
 		private string _descripcion { get; set; }
 		private int _monto { get; set; }
 		private int _producto { get; set; }
@@ -20,6 +20,7 @@ namespace DACServices.Business.Service
 		private ServiceUsuarioBusiness usuarioBusiness = new ServiceUsuarioBusiness();
 		private ServicePaymentBusiness paymentBusiness = new ServicePaymentBusiness();
 		private ServicePaymentDetailBusiness paymentDetailBusiness = new ServicePaymentDetailBusiness();
+		private ServiceMailingBusiness serviceMailingBusiness = new ServiceMailingBusiness();
 
 		public ServicePaymentFormBusiness(string userName, string descripcion, int monto, int producto, int cuotas, string email)
 		{
@@ -31,7 +32,7 @@ namespace DACServices.Business.Service
 			_email = email;
 		}
 
-		public void GenerarFormularioDePago()
+		public tbPayment GenerarFormularioDePago()
 		{
 			try
 			{
@@ -54,9 +55,19 @@ namespace DACServices.Business.Service
 				//Actualizo el payment con el formulario de pagos si no retorno nulo
 				if (!string.IsNullOrEmpty(urlPaymentForm))
 				{
+					//Actualizo payment con el formulario de pago
 					payment.pay_url_formulario = urlPaymentForm;
-					this.UpdatePayment(payment);
+					payment = this.UpdatePayment(payment);
+
+					//envio e-mail
+					this.SendEmamil(urlPaymentForm);
+
+					//Actualizo payment con el contador de envio de mails
+					payment.pay_cantidad_mails_enviados++;
+					payment = this.UpdatePayment(payment);
 				}
+
+				return payment;
 			}
 			catch (Exception ex)
 			{
@@ -123,7 +134,7 @@ namespace DACServices.Business.Service
 				{
 					usu_id = usuario.usu_id,
 					pay_email_to = _email,
-					pay_estado = false,
+					pay_estado_pago = false,
 					pay_fecha = DateTime.Now
 				};
 				payment = paymentBusiness.Create(payment) as tbPayment;
@@ -134,6 +145,7 @@ namespace DACServices.Business.Service
 				throw ex;
 			}
 		}
+
 		private tbPayment UpdatePayment(tbPayment payment)
 		{
 			try
@@ -146,5 +158,46 @@ namespace DACServices.Business.Service
 				throw ex;
 			}
 		}
+
+		private void SendEmamil(string urlPaymentForm)
+		{
+			try
+			{
+				string body = this.GetEmailBody(urlPaymentForm);
+				string subject = string.Format("AP - Detalle Consumo");
+				Task.Run(async () => await serviceMailingBusiness.DacSendMail(_email, subject, body));
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		private string GetEmailBody(string urlPaymentForm)
+		{
+			try
+			{
+				string nombreFantasia = "Pizzeria los hijos de puta";
+				string body = @"<h4>Hola {0}</h4>
+					<br>
+					<p>Gracias por venir a: {1}</p> 
+					<br>
+					<p>Detalle de su consumo: {2}</p> 
+					<br>
+					<p>El total a pagar es: ${3}</p> 
+					<br>
+					<p>Haga click <a href='{4}'>acá</a> para pagar</p>
+					<br>
+					<img src='https://deandesconsulting.azurewebsites.net/Content/images/azure.png'/>
+					<br>";
+
+				return string.Format(body, _email, nombreFantasia, _descripcion, (_monto / 100).ToString(), urlPaymentForm);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 	}
 }
