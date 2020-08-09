@@ -16,12 +16,15 @@ namespace DACServices.Api.Controllers
 		//public object Post([FromUri]ServicePaymentFormListenerModel model)
 
 		[HttpPost]
-		public object Post([FromBody] string psp_TransactionId, string psp_MerchTxRef)
+		public object Post([FromUri] string psp_TransactionId, string psp_MerchTxRef)
 		{
 			try
 			{
 				//?psp_TransactionId=4556209&psp_MerchTxRef=1
 				ServicePaymentFormListenerModel model = new ServicePaymentFormListenerModel();
+				model.psp_MerchTxRef = psp_MerchTxRef;
+				model.psp_TransactionId = psp_TransactionId;
+
 				int idPayment = Int32.Parse(model.psp_MerchTxRef);
 
 				ServicePaymentFormListenerBusiness paymentFormListenerBusiness = 
