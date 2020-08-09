@@ -6,17 +6,20 @@ using DACServices.Repositories.Vendor.NpsVendor.Security;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DACServices.Repositories.Vendor.NpsVendor.Payment
 {
-	public class NpsPaymentForm
+	public class NpsPaymentFormRepository
 	{
 		private tbPaymentDetail _paymentDetail = new tbPaymentDetail();
 		private ServiceRequestPaymentVendorRepository requestPaymentVendorRepository = new ServiceRequestPaymentVendorRepository();
 		private tbRequestPaymentVendor requestPaymentVendor = new tbRequestPaymentVendor();
+
+		#region Solicitar Formulario
 
 		public string CrearFormulario(string merchantTransactionReference, string amount, string product, 
 			string numPayments, tbPaymentDetail paymentDetail)
@@ -38,6 +41,7 @@ namespace DACServices.Repositories.Vendor.NpsVendor.Payment
 				throw ex;
 			}
 		}
+
 		private string ArmarRequest(NpsModel model)
 		{
 			try
@@ -57,6 +61,7 @@ namespace DACServices.Repositories.Vendor.NpsVendor.Payment
 				result = client.PayOnLine_3p(query);
 				this.AuditRequestResponse(JsonConvert.SerializeObject(result));
 
+				//Estoy actualizando por referencia los valores de los campos dentro del registro tbPaymentDetails
 				_paymentDetail.pde_vendor_response_id = result.psp_TransactionId;
 				_paymentDetail.pde_vendor_response_status = result.psp_ResponseCod;
 
@@ -80,7 +85,7 @@ namespace DACServices.Repositories.Vendor.NpsVendor.Payment
 			req.psp_TxSource = "WEB";
 			req.psp_MerchTxRef = model.psp_MerchTxRef; //This will be guide numer
 			req.psp_MerchOrderId = "003";
-			req.psp_ReturnURL = "http://localhost:52991/Test/GetResult/";
+			req.psp_ReturnURL = ConfigurationManager.AppSettings["ServerName"] + "/api/ServicePaymentFormListener";
 			req.psp_FrmLanguage = "es_AR";//<-- this will be parameter (ex. cookies)
 			//req.psp_FrmBackButtonURL = "https://returnurl/back.html";
 			req.psp_Amount = model.psp_Amount;
@@ -112,6 +117,95 @@ namespace DACServices.Repositories.Vendor.NpsVendor.Payment
 				PayOnline3p.psp_TxSource, PayOnline3p.psp_Version);
 		}
 
+		#endregion
+
+		#region Consultar Transacción
+
+		public bool ConsultarEstadoDelPago(string psp_TransactionId, string psp_MerchTxRef, tbPaymentDetail paymentDetail)
+		{
+			try
+			{
+				_paymentDetail = paymentDetail;
+
+				NpsModel model = new NpsModel();
+				model.psp_QueryCriteria = "T";
+				model.psp_QueryCriteriaId = psp_TransactionId;
+
+				return this.RequestSimpleQueryTx(model);
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		private bool RequestSimpleQueryTx(NpsModel model)
+		{
+			try
+			{
+				bool estadoDelPago = false;
+				//var proxy = new NpsService.PaymentServicePlatformPortTypeClient("PaymentServicePlatformPort");
+
+				System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+
+				PaymentServicePlatformPortTypeClient client =
+					new PaymentServicePlatformPortTypeClient("PaymentServicePlatformPort");
+
+				RespuestaStruct_SimpleQueryTx result = new RespuestaStruct_SimpleQueryTx();
+				RequerimientoStruct_SimpleQueryTx query = new RequerimientoStruct_SimpleQueryTx();
+				query = GetRequestSimpleQueryTx(model);
+				
+				this.AuditRequestResponse(JsonConvert.SerializeObject(query));
+				result = client.SimpleQueryTx(query);
+				this.AuditRequestResponse(JsonConvert.SerializeObject(result));
+
+				//Estoy actualizando por referencia los valores de los campos dentro del registro tbPaymentDetails
+				_paymentDetail.pde_vendor_response_status = result.psp_ResponseCod;
+
+				//Valido si el codigo de respuesta es OK, retorno true, sino false
+				if (Int32.Parse(result.psp_ResponseCod).Equals(2))
+				{
+					if (result.psp_Transaction != null &&
+						Int32.Parse(result.psp_Transaction.psp_ResponseCod).Equals(2))
+					{
+						estadoDelPago = true;
+						//Estoy actualizando por referencia los valores de los campos dentro del registro tbPaymentDetails
+						_paymentDetail.pde_vendor_response_id = result.psp_Transaction.psp_TransactionId;
+					}
+				}
+
+				return estadoDelPago;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		public static RequerimientoStruct_SimpleQueryTx GetRequestSimpleQueryTx(NpsModel model)
+		{
+			RequerimientoStruct_SimpleQueryTx req = new RequerimientoStruct_SimpleQueryTx();
+
+			req.psp_Version = "2.2";
+			req.psp_MerchantId = "arsa_smartcar";
+			req.psp_QueryCriteria = model.psp_QueryCriteria;
+			req.psp_QueryCriteriaId = model.psp_QueryCriteriaId;
+			req.psp_PosDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+			NpsEncryptFields operations = new NpsEncryptFields();
+			req.psp_SecureHash = operations.EncriptarCampos(GetCatParamsSimpleQueryTx(req));
+
+			return req;
+		}
+
+		public static string GetCatParamsSimpleQueryTx(RequerimientoStruct_SimpleQueryTx SimpleQueryTx)
+		{
+			return string.Concat(SimpleQueryTx.psp_MerchantId, SimpleQueryTx.psp_PosDateTime,
+				SimpleQueryTx.psp_QueryCriteria, SimpleQueryTx.psp_QueryCriteriaId, SimpleQueryTx.psp_Version);
+		}
+
+
+		#endregion
 
 		private void AuditRequestResponse(string json)
 		{

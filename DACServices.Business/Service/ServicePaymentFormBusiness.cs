@@ -148,23 +148,6 @@ namespace DACServices.Business.Service
 			}
 		}
 
-		//private tbUsuario GetUserByName()
-		//{
-		//	try
-		//	{
-		//		//Obengo el usuario por user name
-		//		bool func(tbUsuario x) => x.usu_usuario == _userName;
-		//		List<tbUsuario> listaUsuarios = usuarioBusiness.Read(func) as List<tbUsuario>;
-		//		if (listaUsuarios != null)
-		//			return listaUsuarios.FirstOrDefault();
-		//		return null;
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		throw ex;
-		//	}
-		//}
-
 		private tbPayment CreatePayment()
 		{
 			try

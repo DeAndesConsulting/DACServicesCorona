@@ -46,6 +46,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -107,7 +108,7 @@
     <Compile Include="Vendor\ItrisTipoDeArticuloRepository.cs" />
     <Compile Include="Vendor\ItrisTipoDeComercioRepository.cs" />
     <Compile Include="Vendor\NpsVendor\Model\NpsModel.cs" />
-    <Compile Include="Vendor\NpsVendor\Payment\NpsPaymentForm.cs" />
+    <Compile Include="Vendor\NpsVendor\Payment\NpsPaymentFormRepository.cs" />
     <Compile Include="Vendor\NpsVendor\Security\NpsEncryptFields.cs" />
     <Compile Include="Vendor\NpsVendor\Security\NpsHash.cs" />
     <Compile Include="Vendor\NpsVendor\Security\NpsTypeEncrypt.cs" />
