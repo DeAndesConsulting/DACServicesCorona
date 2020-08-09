@@ -10,37 +10,77 @@ namespace DACServices.Business.Service
 {
 	public class ServicePaymentFormBusiness
 	{
-		private string _userName { get; }
-		private string _descripcion { get; set; }
+		private int _idUser { get; set; }
+		private string _concepto { get; set; }
 		private int _monto { get; set; }
 		private int _producto { get; set; }
 		private int _cuotas { get; set; }
 		private string _email { get; set; }
+		private int _idPayment { get; set; }
 
 		private ServiceUsuarioBusiness usuarioBusiness = new ServiceUsuarioBusiness();
 		private ServicePaymentBusiness paymentBusiness = new ServicePaymentBusiness();
 		private ServicePaymentDetailBusiness paymentDetailBusiness = new ServicePaymentDetailBusiness();
 		private ServiceMailingBusiness serviceMailingBusiness = new ServiceMailingBusiness();
 
-		public ServicePaymentFormBusiness(string userName, string descripcion, int monto, int producto, int cuotas, string email)
+		public ServicePaymentFormBusiness(int idUser, string concepto, int monto, int producto, int cuotas, string email)
 		{
-			_userName = userName;
-			_descripcion = descripcion;
+			_idUser = idUser;
+			_concepto = concepto;
 			_monto = monto;
 			_producto = producto;
 			_cuotas = cuotas;
 			_email = email;
 		}
 
+		public ServicePaymentFormBusiness(int idPayment, int idUser)
+		{
+			_idPayment = idPayment;
+			_idUser = idUser;
+		}
+
+		public ServicePaymentFormBusiness(int idUser)
+		{
+			_idUser = idUser;
+		}
+
+		public List<tbPayment> RecuperarPagosPorUsuario()
+		{
+			try
+			{
+				return this.GetPaymentsByUserId();
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		public tbPayment RecuperarFormularioDePago()
+		{
+			try
+			{
+				tbPayment payment = null;
+				bool func(tbPayment x) => x.pay_id == _idPayment;
+				List<tbPayment> resultList = paymentBusiness.Read(func) as List<tbPayment>;
+
+				if (resultList.Count() > 0)
+					payment = resultList.FirstOrDefault();
+
+				return payment;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
 		public tbPayment GenerarFormularioDePago()
 		{
 			try
 			{
-				//Obtengo el usuario que solicito el formulario por el userName
-				tbUsuario usuario = this.GetUserByName();
-
 				//Creo el registro en la tabla payment
-				tbPayment payment = this.CreatePayment(usuario);
+				tbPayment payment = this.CreatePayment();
 
 				//Creo el detalle del pago
 				tbPaymentDetail paymentDetail = this.CreatePaymentDetail(payment);
@@ -108,31 +148,35 @@ namespace DACServices.Business.Service
 			}
 		}
 
-		private tbUsuario GetUserByName()
-		{
-			try
-			{
-				//Obengo el usuario por user name
-				bool func(tbUsuario x) => x.usu_usuario == _userName;
-				List<tbUsuario> listaUsuarios = usuarioBusiness.Read(func) as List<tbUsuario>;
-				if (listaUsuarios != null)
-					return listaUsuarios.FirstOrDefault();
-				return null;
-			}
-			catch (Exception ex)
-			{
-				throw ex;
-			}
-		}
+		//private tbUsuario GetUserByName()
+		//{
+		//	try
+		//	{
+		//		//Obengo el usuario por user name
+		//		bool func(tbUsuario x) => x.usu_usuario == _userName;
+		//		List<tbUsuario> listaUsuarios = usuarioBusiness.Read(func) as List<tbUsuario>;
+		//		if (listaUsuarios != null)
+		//			return listaUsuarios.FirstOrDefault();
+		//		return null;
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		throw ex;
+		//	}
+		//}
 
-		private tbPayment CreatePayment(tbUsuario usuario)
+		private tbPayment CreatePayment()
 		{
 			try
 			{
 				//Creo el registro de pago
 				tbPayment payment = new tbPayment()
 				{
-					usu_id = usuario.usu_id,
+					usu_id = _idUser,
+					pay_concepto = _concepto,
+					pay_monto = _monto,
+					pay_producto = _producto,
+					pay_cuotas = _cuotas,
 					pay_email_to = _email,
 					pay_estado_pago = false,
 					pay_fecha = DateTime.Now
@@ -152,6 +196,19 @@ namespace DACServices.Business.Service
 			{
 				payment = paymentBusiness.Update(payment) as tbPayment;
 				return payment;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
+
+		private List<tbPayment> GetPaymentsByUserId()
+		{
+			try
+			{
+				bool func(tbPayment x) => x.usu_id == _idUser;
+				return paymentBusiness.Read(func) as List<tbPayment>;
 			}
 			catch (Exception ex)
 			{
@@ -184,14 +241,14 @@ namespace DACServices.Business.Service
 					<br>
 					<p>Detalle de su consumo: {2}</p> 
 					<br>
-					<p>El total a pagar es: ${3}</p> 
+					<p>El total a pagar es: $ {3}</p> 
 					<br>
 					<p>Haga click <a href='{4}'>acá</a> para pagar</p>
 					<br>
 					<img src='https://deandesconsulting.azurewebsites.net/Content/images/azure.png'/>
 					<br>";
 
-				return string.Format(body, _email, nombreFantasia, _descripcion, (_monto / 100).ToString(), urlPaymentForm);
+				return string.Format(body, _email, nombreFantasia, _concepto, ((double)_monto / 100).ToString(), urlPaymentForm);
 			}
 			catch (Exception ex)
 			{

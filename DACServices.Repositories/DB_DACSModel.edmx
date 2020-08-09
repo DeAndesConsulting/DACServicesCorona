@@ -62,6 +62,10 @@
           </Key>
           <Property Name="pay_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="usu_id" Type="int" Nullable="false" />
+          <Property Name="pay_concepto" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="pay_monto" Type="int" Nullable="false" />
+          <Property Name="pay_producto" Type="int" Nullable="false" />
+          <Property Name="pay_cuotas" Type="int" Nullable="false" />
           <Property Name="pay_url_formulario" Type="varchar" MaxLength="500" />
           <Property Name="pay_email_to" Type="varchar" MaxLength="300" Nullable="false" />
           <Property Name="pay_cantidad_mails_enviados" Type="int" Nullable="false" />
@@ -395,6 +399,10 @@
           </Key>
           <Property Name="pay_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="usu_id" Type="Int32" Nullable="false" />
+          <Property Name="pay_concepto" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="pay_monto" Type="Int32" Nullable="false" />
+          <Property Name="pay_producto" Type="Int32" Nullable="false" />
+          <Property Name="pay_cuotas" Type="Int32" Nullable="false" />
           <Property Name="pay_url_formulario" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="pay_email_to" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
           <Property Name="pay_cantidad_mails_enviados" Type="Int32" Nullable="false" />
@@ -642,6 +650,10 @@
                 <ScalarProperty Name="pay_cantidad_mails_enviados" ColumnName="pay_cantidad_mails_enviados" />
                 <ScalarProperty Name="pay_email_to" ColumnName="pay_email_to" />
                 <ScalarProperty Name="pay_url_formulario" ColumnName="pay_url_formulario" />
+                <ScalarProperty Name="pay_cuotas" ColumnName="pay_cuotas" />
+                <ScalarProperty Name="pay_producto" ColumnName="pay_producto" />
+                <ScalarProperty Name="pay_monto" ColumnName="pay_monto" />
+                <ScalarProperty Name="pay_concepto" ColumnName="pay_concepto" />
                 <ScalarProperty Name="usu_id" ColumnName="usu_id" />
                 <ScalarProperty Name="pay_id" ColumnName="pay_id" />
               </MappingFragment>

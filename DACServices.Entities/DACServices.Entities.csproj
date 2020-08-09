@@ -97,6 +97,7 @@
     <Compile Include="tbCuestionario.cs" />
     <Compile Include="tbCuestionarioPregunta.cs" />
     <Compile Include="tbPaciente.cs" />
+    <Compile Include="tbPayment.cs" />
     <Compile Include="tbPregunta.cs" />
     <Compile Include="tbRequest.cs" />
     <Compile Include="tbUsuario.cs" />
