@@ -25,9 +25,6 @@ namespace DACServices.Business.Service
 
 		public tbPayment ActualizarPayment()
 		{
-			string server = Dns.GetHostEntry(Dns.GetHostName()).HostName;// System.Environment.MachineName;
-			string urlOk = "http://urlOK";
-
 			//Inserto en payment detail el post del proveedor
 			tbPaymentDetail paymentDetailPost = this.InsertPaymentDetail("POST_VENDOR");
 

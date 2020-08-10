@@ -162,11 +162,15 @@ namespace DACServices.Repositories.Vendor.NpsVendor.Payment
 				//Estoy actualizando por referencia los valores de los campos dentro del registro tbPaymentDetails
 				_paymentDetail.pde_vendor_response_status = result.psp_ResponseCod;
 
-				//Valido si el codigo de respuesta es OK, retorno true, sino false
+				//Valido si el codigo de respuesta del simple query es OK = 2
+				//y el codigo de la transaccion=0 "Compra online aprobada", retorno true, sino false
+				//result.psp_Transaction.psp_ResponseCod = 0 (Pago aceptado)
+				//result.psp_Transaction.psp_ResponseCod = 9 (Pago rechazado)
+				//result.psp_Transaction.psp_ResponseCod = 1 (Formulario en curso)
 				if (Int32.Parse(result.psp_ResponseCod).Equals(2))
 				{
 					if (result.psp_Transaction != null &&
-						Int32.Parse(result.psp_Transaction.psp_ResponseCod).Equals(2))
+						Int32.Parse(result.psp_Transaction.psp_ResponseCod).Equals(0))
 					{
 						estadoDelPago = true;
 						//Estoy actualizando por referencia los valores de los campos dentro del registro tbPaymentDetails

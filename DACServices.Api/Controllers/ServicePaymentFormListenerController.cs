@@ -13,19 +13,32 @@ namespace DACServices.Api.Controllers
     public class ServicePaymentFormListenerController : ApiController
     {
 		ILog log = LogManager.GetLogger(typeof(ServicePaymentFormListenerController));
-		//public object Post([FromUri]ServicePaymentFormListenerModel model)
 
 		[HttpPost]
-		public object Post([FromUri] string psp_TransactionId, string psp_MerchTxRef)
+		public object Post(HttpRequestMessage request)
 		{
 			try
 			{
-				//?psp_TransactionId=4556209&psp_MerchTxRef=1
+				string[] parametros = request.Content.ReadAsStringAsync().Result.Split('&');
 				ServicePaymentFormListenerModel model = new ServicePaymentFormListenerModel();
-				model.psp_MerchTxRef = psp_MerchTxRef;
-				model.psp_TransactionId = psp_TransactionId;
 
-				int idPayment = Int32.Parse(model.psp_MerchTxRef);
+				foreach(var p in parametros)
+				{
+					string[] value = p.Split('=');
+					if (p.Contains("psp_TransactionId"))
+						model.psp_TransactionId = value[1];
+
+					if (p.Contains("psp_MerchTxRef"))
+						model.psp_MerchTxRef = value[1];
+				}
+
+				//Este parseo se hace unicamente porque tengo como merchTxRef CARG0-00001-idPayment
+				string[] arregloTemp = model.psp_MerchTxRef.Split('-');
+				string idPaymentTemp = arregloTemp[2];
+				int idPayment = Int32.Parse(idPaymentTemp);
+
+				//Esta parseo deberia ir, se deja el de arriba solo par avanzar el desarrollo
+				//int idPayment = Int32.Parse(model.psp_MerchTxRef);
 
 				ServicePaymentFormListenerBusiness paymentFormListenerBusiness = 
 					new ServicePaymentFormListenerBusiness(model.psp_TransactionId, idPayment);

@@ -14,7 +14,8 @@ namespace DACServices.Business.Vendor.NPS
 		{
 			try
 			{
-				string merchantTransactionReference = "CARGO-010000" + idPayment.ToString();
+				//Cuando se pase a test/pro se tiene que eliminar esto.
+				string merchantTransactionReference = "CARGO-010000-" + idPayment.ToString();
 				string amount = monto.ToString();
 				string product = producto.ToString();
 				string numPayments = cuotas.ToString();
