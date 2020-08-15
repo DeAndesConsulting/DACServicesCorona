@@ -96,12 +96,17 @@ namespace DACServices.Business.Service
 					payment.pay_url_formulario = urlPaymentForm;
 					payment = this.UpdatePayment(payment);
 
-					//envio e-mail
-					this.SendEmamil(urlPaymentForm);
+					//Estoy almacenando el codigo de errror en urlPayment si NPS arrojar error. Ej trx duplicada
+					//Entonces para el envio del mail, valido que urlPaymentForm contenga http
+					if (urlPaymentForm.Contains("http"))
+					{
+						//envio e-mail
+						this.SendEmamil(urlPaymentForm);
 
-					//Actualizo payment con el contador de envio de mails
-					payment.pay_cantidad_mails_enviados++;
-					payment = this.UpdatePayment(payment);
+						//Actualizo payment con el contador de envio de mails
+						payment.pay_cantidad_mails_enviados++;
+						payment = this.UpdatePayment(payment);
+					}
 				}
 
 				return payment;
