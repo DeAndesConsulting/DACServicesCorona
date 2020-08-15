@@ -24,7 +24,7 @@ namespace DACServices.Api.Models
 			menuChild.path = "/";
 			//agrego hijo a padre
 			menuFather.children.Add(menuChild);
-				//agrego padre a menu
+			//agrego padre a menu
 			menu.Add(menuFather);
 
 			//creo padre
@@ -52,8 +52,23 @@ namespace DACServices.Api.Models
 			menuChild.path = "/perfiles";
 			//agrego hijo a padre
 			menuFather.children.Add(menuChild);
-
 			//agrego padre a menu
+			menu.Add(menuFather);
+
+			//creo padre payments
+			menuFather = new MenuFather();
+			menuFather.icon = "mdi-chevron-up";
+			menuFather.icon_alt = "mdi-chevron-down";
+			menuFather.text = "Pagos";
+			//creo lista hijos
+			menuFather.children = new List<MenuChild>();
+			//creo hijo
+			menuChild = new MenuChild();
+			menuChild.text = "Lista de Pagos";
+			menuChild.path = "/payments";
+			//agrego hijo a padre
+			menuFather.children.Add(menuChild);
+			//Agrego padre a menu principal
 			menu.Add(menuFather);
 
 			return menu;

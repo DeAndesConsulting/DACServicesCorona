@@ -23,20 +23,17 @@ namespace DACServices.Business.Service
 		private ServicePaymentDetailBusiness paymentDetailBusiness = new ServicePaymentDetailBusiness();
 		private ServiceMailingBusiness serviceMailingBusiness = new ServiceMailingBusiness();
 
-		public ServicePaymentFormBusiness(int idUser, string concepto, int monto, int producto, int cuotas, string email)
-		{
-			_idUser = idUser;
-			_concepto = concepto;
-			_monto = monto;
-			_producto = producto;
-			_cuotas = cuotas;
-			_email = email;
-		}
+		public ServicePaymentFormBusiness()
+		{ }
 
-		public ServicePaymentFormBusiness(int idPayment, int idUser)
+		public ServicePaymentFormBusiness(tbPayment payment)
 		{
-			_idPayment = idPayment;
-			_idUser = idUser;
+			_idUser = payment.usu_id;
+			_concepto = payment.pay_concepto;
+			_monto = payment.pay_monto;
+			_producto = payment.pay_producto;
+			_cuotas = payment.pay_cuotas;
+			_email = payment.pay_email_to;
 		}
 
 		public ServicePaymentFormBusiness(int idUser)
@@ -56,12 +53,12 @@ namespace DACServices.Business.Service
 			}
 		}
 
-		public tbPayment RecuperarFormularioDePago()
+		public tbPayment RecuperarFormularioDePago(int idPayment)
 		{
 			try
 			{
 				tbPayment payment = null;
-				bool func(tbPayment x) => x.pay_id == _idPayment;
+				bool func(tbPayment x) => x.pay_id == idPayment;
 				List<tbPayment> resultList = paymentBusiness.Read(func) as List<tbPayment>;
 
 				if (resultList.Count() > 0)

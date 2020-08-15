@@ -21,12 +21,8 @@ namespace DACServices.Api.Controllers
 		{
 			try
 			{
-				ServicePaymentFormModel model = new ServicePaymentFormModel();
-				model.Payments = new List<tbPayment>();
-
 				ServicePaymentFormBusiness servicePaymentFormBusiness = new ServicePaymentFormBusiness(id);
-				model.Payments = servicePaymentFormBusiness.RecuperarPagosPorUsuario();
-				return model;
+				return servicePaymentFormBusiness.RecuperarPagosPorUsuario();
 			}
 			catch (Exception ex)
 			{
@@ -38,21 +34,18 @@ namespace DACServices.Api.Controllers
 		}
 
 		[HttpPost]
-		public object Post(ServicePaymentFormModel model)
+		public object Post(tbPayment model)
 		{
 			try
 			{
-				tbPayment payment;
-
-				if (model.Payment.pay_id != 0)
-					payment = this.RecoverPayment(model);
+				tbPayment response;
+				if (model.pay_id != 0)
+					response = this.RecoverPayment(model);
 				else
-					payment = this.CreatePayment(model);
+					response = this.CreatePayment(model);
 
-				model.Payment = payment;
-
-				if (!string.IsNullOrEmpty(model.Payment.pay_url_formulario))
-					return Request.CreateResponse(HttpStatusCode.Created, model);
+				if (!string.IsNullOrEmpty(response.pay_url_formulario))
+					return Request.CreateResponse(HttpStatusCode.Created, response);
 
 				return Request.CreateResponse(HttpStatusCode.Conflict);
 			}
@@ -65,18 +58,12 @@ namespace DACServices.Api.Controllers
 			}
 		}
 
-		private tbPayment RecoverPayment(ServicePaymentFormModel model)
+		private tbPayment RecoverPayment(tbPayment model)
 		{
 			try
 			{
-				int idUser = (int)model.IdUser;
-
-				ServicePaymentFormBusiness paymentFormBusiness =
-					new ServicePaymentFormBusiness(model.Payment.pay_id, idUser);
-
-				var payment = paymentFormBusiness.RecuperarFormularioDePago();
-
-				return payment;
+				ServicePaymentFormBusiness paymentFormBusiness = new ServicePaymentFormBusiness();
+				return paymentFormBusiness.RecuperarFormularioDePago(model.pay_id);
 			}
 			catch (Exception ex)
 			{
@@ -84,19 +71,12 @@ namespace DACServices.Api.Controllers
 			}
 		}
 
-		private tbPayment CreatePayment(ServicePaymentFormModel model)
+		private tbPayment CreatePayment(tbPayment model)
 		{
 			try
 			{
-				int idUser = (int)model.IdUser;
-
-				ServicePaymentFormBusiness paymentFormBusiness =
-					new ServicePaymentFormBusiness(idUser, model.Payment.pay_concepto, model.Payment.pay_monto,
-						model.Payment.pay_producto, model.Payment.pay_cuotas, model.Payment.pay_email_to);
-
-				var payment = paymentFormBusiness.GenerarFormularioDePago();
-
-				return payment;
+				ServicePaymentFormBusiness paymentFormBusiness = new ServicePaymentFormBusiness(model);
+				return paymentFormBusiness.GenerarFormularioDePago();
 			}
 			catch (Exception ex)
 			{
