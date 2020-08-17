@@ -195,6 +195,7 @@
     <Compile Include="Controllers\ServiceBaseController.cs" />
     <Compile Include="Controllers\ServiceFormularioController.cs" />
     <Compile Include="Controllers\ServicePacienteController.cs" />
+    <Compile Include="Controllers\ServicePaymentController.cs" />
     <Compile Include="Controllers\ServicePaymentFormController.cs" />
     <Compile Include="Controllers\ServicePaymentFormListenerController.cs" />
     <Compile Include="Controllers\ServicePreguntaController.cs" />
