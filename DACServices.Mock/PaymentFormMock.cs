@@ -38,7 +38,7 @@ namespace DACServices.Mock
 				pay_id = 2,
 				usu_id = 1,
 				pay_concepto = "asd",
-				pay_monto = 1000,
+				pay_monto = 2000,
 				pay_producto = 14,
 				pay_cuotas = 1,
 				pay_url_formulario = "https=//implementacion.nps.com.ar/psp3p_gen_form.php?id=4558369&t=313d1fd99e27f71afe2be2dbef511a5a",
@@ -54,7 +54,7 @@ namespace DACServices.Mock
 				pay_id = 3,
 				usu_id = 1,
 				pay_concepto = "asd",
-				pay_monto = 1000,
+				pay_monto = 2115,
 				pay_producto = 14,
 				pay_cuotas = 1,
 				pay_url_formulario = "https://implementacion.nps.com.ar/psp3p_gen_form.php?id=4558431&t=605ce7ec2365dd5c99bf20705b004cd0",
@@ -70,7 +70,7 @@ namespace DACServices.Mock
 				pay_id = 4,
 				usu_id = 1,
 				pay_concepto = "asd",
-				pay_monto = 1000,
+				pay_monto = 2335,
 				pay_producto = 14,
 				pay_cuotas = 1,
 				pay_url_formulario = "https://implementacion.nps.com.ar/psp3p_gen_form.php?id=4558462&t=bbc25065487ab2a16f54990746b42720",
@@ -86,7 +86,7 @@ namespace DACServices.Mock
 				pay_id = 5,
 				usu_id = 1,
 				pay_concepto = "2 pintas",
-				pay_monto = 1500,
+				pay_monto = 1545,
 				pay_producto = 14,
 				pay_cuotas = 2,
 				pay_url_formulario = "https://implementacion.nps.com.ar/psp3p_gen_form.php?id=4558685&t=42f1e14a16fef8fd006dd2ba89f957ad",
@@ -102,7 +102,7 @@ namespace DACServices.Mock
 				pay_id = 6,
 				usu_id = 1,
 				pay_concepto = "5 pintas",
-				pay_monto = 1500,
+				pay_monto = 1195,
 				pay_producto = 14,
 				pay_cuotas = 2,
 				pay_url_formulario = "https://implementacion.nps.com.ar/psp3p_gen_form.php?id=4560468&t=d149726e910712efdc92464e0a5f372a",
@@ -122,19 +122,19 @@ namespace DACServices.Mock
 			return _instancia;
 		}
 
-		public List<tbPayment> GetList()
+		public List<tbPayment> Get(int id)
 		{
-			return _lista.OrderByDescending(x => x.pay_id).ToList();
-		}
-
-		public tbPayment Get(int id)
-		{
-			return _lista.Where(x => x.pay_id == id).FirstOrDefault();
+			return _lista.Where(x => x.usu_id == id).ToList();
 		}
 
 		public tbPayment Create(tbPayment obj)
 		{
 			obj.pay_id = _lista.OrderByDescending(x => x.pay_id).FirstOrDefault().pay_id + 1;
+			obj.pay_url_formulario = "https://implementacion.nps.com.ar/psp3p_gen_form.php?id=4572320&t=68fdf1db8ab9b704290b392bf638236a";
+			obj.pay_cantidad_mails_enviados = 1;
+			obj.pay_estado_pago = false;
+			obj.pay_fecha = DateTime.Now;
+
 			_lista.Add(obj);
 			return obj;
 		}

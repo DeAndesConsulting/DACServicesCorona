@@ -16,7 +16,6 @@ namespace DACServices.Business.Service
 		private int _producto { get; set; }
 		private int _cuotas { get; set; }
 		private string _email { get; set; }
-		private int _idPayment { get; set; }
 
 		private ServiceUsuarioBusiness usuarioBusiness = new ServiceUsuarioBusiness();
 		private ServicePaymentBusiness paymentBusiness = new ServicePaymentBusiness();

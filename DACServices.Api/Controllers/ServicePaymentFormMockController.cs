@@ -1,4 +1,5 @@
-﻿using DACServices.Entities;
+﻿using DACServices.Api.Models;
+using DACServices.Entities;
 using DACServices.Mock;
 using log4net;
 using System;
@@ -14,35 +15,17 @@ namespace DACServices.Api.Controllers
     public class ServicePaymentFormMockController : ApiController
     {
 		private ILog log = LogManager.GetLogger(typeof(ServicePaymentFormMockController));
-		private List<tbPayment> listaMock = PaymentFormMock.Instancia().GetList();
+		//private List<tbPayment> listaMock = PaymentFormMock.Instancia().GetList();
 
 		[HttpGet]
 		public object Get(int id)
 		{
 			try
 			{
-				var result = PaymentFormMock.Instancia().Get(id);
+				ServicePaymentFormModel model = new ServicePaymentFormModel();
 
-				if (result != null)
-					return Request.CreateResponse(HttpStatusCode.OK, result);
-
-				return Request.CreateResponse(HttpStatusCode.NotFound);
-			}
-			catch (Exception ex)
-			{
-				log.Error("Mensaje de Error: " + ex.Message);
-				if (ex.InnerException != null)
-					log.Error("Inner exception: " + ex.InnerException.Message);
-				throw ex;
-			}
-		}
-
-		[HttpGet]
-		public object Get()
-		{
-			try
-			{
-				var result = listaMock;
+				var lista = PaymentFormMock.Instancia().Get(id);
+				var result = model.ConvertListPaymentToListModel(lista);
 
 				if (result != null)
 					return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -59,13 +42,15 @@ namespace DACServices.Api.Controllers
 		}
 
 		[HttpPost]
-		public object Post(tbPayment obj)
+		public object Post(ServicePaymentFormModel model)
 		{
 			try
 			{
-				var result = PaymentFormMock.Instancia().Create(obj);
+				tbPayment payment = model.ConvertModelToPayment();
+				var createdObj = PaymentFormMock.Instancia().Create(payment);
+				var result = model.ConvertPaymentToModel(createdObj);
 
-				if (result.usu_id != 0)
+				if (result.id != 0)
 					return Request.CreateResponse(HttpStatusCode.Created, result);
 
 				return Request.CreateResponse(HttpStatusCode.BadRequest);
@@ -84,12 +69,7 @@ namespace DACServices.Api.Controllers
 		{
 			try
 			{
-				var result = PaymentFormMock.Instancia().Update(obj);
-
-				if (result != null)
-					return Request.CreateResponse(HttpStatusCode.OK, result);
-
-				return Request.CreateResponse(HttpStatusCode.BadRequest);
+				throw new NotImplementedException();
 			}
 			catch (Exception ex)
 			{
@@ -105,14 +85,7 @@ namespace DACServices.Api.Controllers
 		{
 			try
 			{
-				tbPayment obj = new tbPayment() { pay_id = id };
-
-				var result = PaymentFormMock.Instancia().Delete(obj);
-
-				if (result != null)
-					return Request.CreateResponse(HttpStatusCode.OK, result);
-
-				return Request.CreateResponse(HttpStatusCode.BadRequest);
+				throw new NotImplementedException();
 			}
 			catch (Exception ex)
 			{
@@ -122,7 +95,6 @@ namespace DACServices.Api.Controllers
 				throw ex;
 			}
 		}
-
 
 	}
 }

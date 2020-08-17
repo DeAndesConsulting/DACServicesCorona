@@ -21,8 +21,10 @@ namespace DACServices.Api.Controllers
 		{
 			try
 			{
+				ServicePaymentFormModel model = new ServicePaymentFormModel();
+
 				ServicePaymentFormBusiness servicePaymentFormBusiness = new ServicePaymentFormBusiness(id);
-				return servicePaymentFormBusiness.RecuperarPagosPorUsuario();
+				return model.ConvertListPaymentToListModel(servicePaymentFormBusiness.RecuperarPagosPorUsuario());
 			}
 			catch (Exception ex)
 			{
@@ -34,17 +36,19 @@ namespace DACServices.Api.Controllers
 		}
 
 		[HttpPost]
-		public object Post(tbPayment model)
+		public object Post(ServicePaymentFormModel model)
 		{
 			try
 			{
-				tbPayment response;
-				if (model.pay_id != 0)
-					response = this.RecoverPayment(model);
-				else
-					response = this.CreatePayment(model);
+				tbPayment payment = model.ConvertModelToPayment();
+				ServicePaymentFormModel response;
 
-				if (!string.IsNullOrEmpty(response.pay_url_formulario))
+				if (payment.pay_id != 0)
+					response = model.ConvertPaymentToModel(this.RecoverPayment(payment));
+				else
+					response = model.ConvertPaymentToModel(this.CreatePayment(payment));
+
+				if (!string.IsNullOrEmpty(response.url_formulario))
 					return Request.CreateResponse(HttpStatusCode.Created, response);
 
 				return Request.CreateResponse(HttpStatusCode.Conflict);
@@ -58,12 +62,12 @@ namespace DACServices.Api.Controllers
 			}
 		}
 
-		private tbPayment RecoverPayment(tbPayment model)
+		private tbPayment RecoverPayment(tbPayment payment)
 		{
 			try
 			{
 				ServicePaymentFormBusiness paymentFormBusiness = new ServicePaymentFormBusiness();
-				return paymentFormBusiness.RecuperarFormularioDePago(model.pay_id);
+				return paymentFormBusiness.RecuperarFormularioDePago(payment.pay_id);
 			}
 			catch (Exception ex)
 			{
@@ -71,11 +75,11 @@ namespace DACServices.Api.Controllers
 			}
 		}
 
-		private tbPayment CreatePayment(tbPayment model)
+		private tbPayment CreatePayment(tbPayment payment)
 		{
 			try
 			{
-				ServicePaymentFormBusiness paymentFormBusiness = new ServicePaymentFormBusiness(model);
+				ServicePaymentFormBusiness paymentFormBusiness = new ServicePaymentFormBusiness(payment);
 				return paymentFormBusiness.GenerarFormularioDePago();
 			}
 			catch (Exception ex)
