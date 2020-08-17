@@ -198,6 +198,7 @@
     <Compile Include="Controllers\ServicePaymentController.cs" />
     <Compile Include="Controllers\ServicePaymentFormController.cs" />
     <Compile Include="Controllers\ServicePaymentFormListenerController.cs" />
+    <Compile Include="Controllers\ServicePaymentFormMockController.cs" />
     <Compile Include="Controllers\ServicePreguntaController.cs" />
     <Compile Include="Controllers\ServiceSecurityUsuarioController.cs" />
     <Compile Include="Controllers\ServiceUsuarioController.cs" />
