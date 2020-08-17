@@ -193,7 +193,7 @@ namespace DACServices.Business.Service
 			try
 			{
 				bool func(tbPayment x) => x.usu_id == _idUser;
-				return paymentBusiness.Read(func) as List<tbPayment>;
+				return (paymentBusiness.Read(func) as List<tbPayment>).OrderByDescending(x => x.pay_id).ToList();
 			}
 			catch (Exception ex)
 			{
