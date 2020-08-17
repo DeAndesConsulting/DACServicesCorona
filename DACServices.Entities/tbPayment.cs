@@ -15,7 +15,7 @@ namespace DACServices.Entities
 
 	[DataContract]
 	public class tbPayment_Metadata
- {
+	{
 		[DataMember(EmitDefaultValue = false)]
 		public int pay_id { get; set; }
 
@@ -40,7 +40,7 @@ namespace DACServices.Entities
 		[DataMember(EmitDefaultValue = false)]
 		public string pay_email_to { get; set; }
 
-		[DataMember(EmitDefaultValue = false)]
+		[DataMember(EmitDefaultValue = true)]
 		public int pay_cantidad_mails_enviados { get; set; }
 
 		[DataMember(EmitDefaultValue = true)]

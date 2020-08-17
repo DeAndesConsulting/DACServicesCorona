@@ -26,7 +26,7 @@ namespace DACServices.Api.Controllers
 				if (result.Count > 0)
 					return Request.CreateResponse(HttpStatusCode.Created, result.FirstOrDefault());
 
-				return Request.CreateErrorResponse(HttpStatusCode.NoContent, "El objeto no existe.");
+				return Request.CreateErrorResponse(HttpStatusCode.NoContent, new Exception("El objeto no existe."));
 			}
 			catch (Exception ex)
 			{
