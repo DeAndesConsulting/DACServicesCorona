@@ -1,4 +1,5 @@
-﻿using DACServices.Business.Service;
+﻿using DACServices.Api.Models;
+using DACServices.Business.Service;
 using DACServices.Entities;
 using log4net;
 using System;
@@ -20,12 +21,16 @@ namespace DACServices.Api.Controllers
 		{
 			try
 			{
+				ServicePaymentFormModel model = new ServicePaymentFormModel();
+
 				bool func(tbPayment x) => x.pay_id == id;
-				var result = servicePaymentBusiness.Read(func) as List<tbPayment>;
+				var paymentList = servicePaymentBusiness.Read(func) as List<tbPayment>;
 
-				if (result.Count > 0)
-					return Request.CreateResponse(HttpStatusCode.Created, result.FirstOrDefault());
-
+				if (paymentList.Count > 0)
+				{
+					var result = model.ConvertPaymentToModel(paymentList.FirstOrDefault());
+					return Request.CreateResponse(HttpStatusCode.Created, result);
+				}
 				return Request.CreateErrorResponse(HttpStatusCode.NoContent, new Exception("El objeto no existe."));
 			}
 			catch (Exception ex)
