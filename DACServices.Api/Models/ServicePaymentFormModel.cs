@@ -125,7 +125,7 @@ namespace DACServices.Api.Models
 			try
 			{
 				List<ServicePaymentFormModel> lista = new List<ServicePaymentFormModel>();
-				var element = this.ConvertPaymentToModel(listaPayment.FirstOrDefault());
+				var element = this.ConvertPaymentToModel(listaPayment.FirstOrDefault()) as ServicePaymentFormModel;
 
 				foreach(var obj in listaPayment)
 					lista.Add(this.ConvertPaymentToModel(obj, element.usuario));

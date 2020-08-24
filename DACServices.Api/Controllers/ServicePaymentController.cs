@@ -21,15 +21,17 @@ namespace DACServices.Api.Controllers
 		{
 			try
 			{
-				ServicePaymentFormModel model = new ServicePaymentFormModel();
+				ServicePaymentModel model = new ServicePaymentModel();
+				//HC despues se va a tener que recuperar de la BD			
+				model.comercio = "Pizzeria los Hijo de Puta";
 
 				bool func(tbPayment x) => x.pay_id == id;
 				var paymentList = servicePaymentBusiness.Read(func) as List<tbPayment>;
 
 				if (paymentList.Count > 0)
 				{
-					var result = model.ConvertPaymentToModel(paymentList.FirstOrDefault());
-					return Request.CreateResponse(HttpStatusCode.Created, result);
+					model = model.ConvertPaymentToModel(paymentList.FirstOrDefault());
+					return Request.CreateResponse(HttpStatusCode.Created, model);
 				}
 				return Request.CreateErrorResponse(HttpStatusCode.NoContent, new Exception("El objeto no existe."));
 			}

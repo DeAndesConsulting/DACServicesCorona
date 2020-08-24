@@ -1,8 +1,10 @@
 ﻿using DACServices.Api.Models;
 using DACServices.Business.Service;
+using DACServices.Entities;
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,8 +23,9 @@ namespace DACServices.Api.Controllers
 			{
 				string[] parametros = request.Content.ReadAsStringAsync().Result.Split('&');
 				ServicePaymentFormListenerModel model = new ServicePaymentFormListenerModel();
+				tbPayment paymentResult;
 
-				foreach(var p in parametros)
+				foreach (var p in parametros)
 				{
 					string[] value = p.Split('=');
 					if (p.Contains("psp_TransactionId"))
@@ -40,14 +43,46 @@ namespace DACServices.Api.Controllers
 				//Esta parseo deberia ir, se deja el de arriba solo par avanzar el desarrollo
 				//int idPayment = Int32.Parse(model.psp_MerchTxRef);
 
-				ServicePaymentFormListenerBusiness paymentFormListenerBusiness = 
-					new ServicePaymentFormListenerBusiness(model.psp_TransactionId, idPayment);
+				//Antes de hacer un hit en NPS consulto el estado del pago, si es true es pq ya se catualizo
+				tbPayment paymentStatus = this.GetPayment(idPayment);
+				if (!paymentStatus.pay_estado_pago)
+				{
+					//Si es falso, deberia analizar si hubo algun error de tarjeta y demas
+					//Ese desarrollo esta pendiente, lo de abajo se deberia ejecutar igual para acualizar o no
+					//Si se tuvo un error en el proceso de pago, consultar seria al pedo
 
-				var payment = paymentFormListenerBusiness.ActualizarPayment();
+					ServicePaymentFormListenerBusiness paymentFormListenerBusiness =
+						new ServicePaymentFormListenerBusiness(model.psp_TransactionId, idPayment);
+
+					paymentResult = paymentFormListenerBusiness.ActualizarPayment();
+				}
+				else
+				{
+					paymentResult = paymentStatus;
+				}
 				//// now redirect
 				var response = Request.CreateResponse(HttpStatusCode.Moved);
-				response.Headers.Location = new Uri("http://www.ole.com.ar");
+				response.Headers.Location = 
+					new Uri(ConfigurationManager.AppSettings["RESPONSE_SERVER"] + paymentResult.pay_estado_pago.ToString());
 				return response;
+			}
+			catch (Exception ex)
+			{
+				log.Error("Error: " + ex.Message);
+				if (ex.InnerException != null)
+					log.Error("Inner exception: " + ex.InnerException.Message);
+				throw ex;
+			}
+		}
+
+		private tbPayment GetPayment(int id)
+		{
+			try
+			{
+				bool func(tbPayment x) => x.pay_id == id;
+				ServicePaymentBusiness business = new ServicePaymentBusiness();
+				var result = business.Read(func) as List<tbPayment>;
+				return result.FirstOrDefault();
 			}
 			catch (Exception ex)
 			{

@@ -216,6 +216,7 @@
     <Compile Include="Models\ServicePaymentFormListenerModel.cs" />
     <Compile Include="Models\ServicePaymentFormModel.cs" />
     <Compile Include="Models\RelevamientoModel.cs" />
+    <Compile Include="Models\ServicePaymentModel.cs" />
     <Compile Include="Models\UsuarioMenuModel.cs" />
     <Compile Include="Models\VendorPaymentFormModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
