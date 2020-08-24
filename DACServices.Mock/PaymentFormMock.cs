@@ -118,7 +118,7 @@ namespace DACServices.Mock
 		public static PaymentFormMock Instancia()
 		{
 			if (_instancia == null)
-				return new PaymentFormMock();
+				_instancia = new PaymentFormMock();
 			return _instancia;
 		}
 

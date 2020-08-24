@@ -15,7 +15,7 @@ namespace DACServices.Api.Controllers
     public class ServicePaymentFormMockController : ApiController
     {
 		private ILog log = LogManager.GetLogger(typeof(ServicePaymentFormMockController));
-		//private List<tbPayment> listaMock = PaymentFormMock.Instancia().GetList();
+		private List<tbPayment> listaMock = PaymentFormMock.Instancia().Get(1);
 
 		[HttpGet]
 		public object Get(int id)
@@ -24,8 +24,8 @@ namespace DACServices.Api.Controllers
 			{
 				ServicePaymentFormModel model = new ServicePaymentFormModel();
 
-				var lista = PaymentFormMock.Instancia().Get(id);
-				var result = model.ConvertListPaymentToListModel(lista);
+				listaMock = PaymentFormMock.Instancia().Get(id);
+				var result = model.ConvertListPaymentToListModel(listaMock);
 
 				if (result != null)
 					return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -48,6 +48,7 @@ namespace DACServices.Api.Controllers
 			{
 				tbPayment payment = model.ConvertModelToPayment();
 				var createdObj = PaymentFormMock.Instancia().Create(payment);
+
 				var result = model.ConvertPaymentToModel(createdObj);
 
 				if (result.id != 0)
