@@ -124,7 +124,7 @@ namespace DACServices.Mock
 
 		public List<tbPayment> Get(int id)
 		{
-			return _lista.Where(x => x.usu_id == id).ToList();
+			return _lista.Where(x => x.usu_id == id).OrderByDescending(x => x.pay_id).ToList();
 		}
 
 		public tbPayment Create(tbPayment obj)
