@@ -45,8 +45,8 @@ namespace DACServices.Api.Helpers.OAuth2
 			var user = new List<Entities.tbUsuario>();
 			if (!string.IsNullOrEmpty(usernameVal) && !string.IsNullOrEmpty(passwordVal))
 			{
-				if (usernameVal == "mock" && passwordVal == "mock")
-					user.Add(new Entities.tbUsuario() { usu_id = 1, usu_usuario = "mock", usu_password = "mock" });
+				if (usernameVal == "refresUser" && passwordVal == "mock")
+					user.Add(new Entities.tbUsuario() { usu_id = 1, usu_usuario = "refresUser", usu_password = "mock" });
 			}
 			//HC user
 
