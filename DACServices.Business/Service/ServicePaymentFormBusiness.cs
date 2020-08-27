@@ -2,6 +2,7 @@
 using DACServices.Entities;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,8 +100,10 @@ namespace DACServices.Business.Service
 					//Entonces para el envio del mail, valido que urlPaymentForm contenga http
 					if (urlPaymentForm.Contains("http"))
 					{
+						//Asigno la url del formulario de pago de la app cliente
+						string vueAppUrl = ConfigurationManager.AppSettings["VUE_APP_URL_FORM"] + "/" + payment.pay_id.ToString();
 						//envio e-mail
-						this.SendEmamil(urlPaymentForm);
+						this.SendEmamil(vueAppUrl);
 
 						//Actualizo payment con el contador de envio de mails
 						payment.pay_cantidad_mails_enviados++;
