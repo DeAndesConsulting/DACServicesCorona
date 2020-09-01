@@ -16,6 +16,9 @@ namespace DACServices.Api.Models
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string usuario { get; set; }
 
+		[JsonProperty(NullValueHandling = NullValueHandling.Include)]
+		public int estado_pago { get; set; }
+
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string concepto { get; set; }
 
@@ -37,8 +40,8 @@ namespace DACServices.Api.Models
 		[JsonProperty(NullValueHandling = NullValueHandling.Include)]
 		public int emails_enviados { get; set; }
 
-		[JsonProperty(NullValueHandling = NullValueHandling.Include)]
-		public bool estado_pago { get; set; }
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public string informacion_adicional { get; set; }
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string fecha { get; set; }
@@ -74,6 +77,7 @@ namespace DACServices.Api.Models
 				{
 					id = payment.pay_id,
 					usuario = userName,
+					estado_pago = payment.pst_id,
 					concepto = payment.pay_concepto,
 					monto = this.ConvertIntToString(payment.pay_monto),
 					producto = this.ConvertProductoCode(payment.pay_producto),
@@ -81,7 +85,7 @@ namespace DACServices.Api.Models
 					url_formulario = payment.pay_url_formulario,
 					emails = payment.pay_email_to,
 					emails_enviados = payment.pay_cantidad_mails_enviados,
-					estado_pago = payment.pay_estado_pago,
+					informacion_adicional = payment.pay_informacion_adicional,
 					fecha = payment.pay_fecha.ToString("dd/MM/yyyy HH:mm:ss")
 				};
 
@@ -101,6 +105,7 @@ namespace DACServices.Api.Models
 				{
 					id = payment.pay_id,
 					usuario = this.getUsuerNameByIdUser(payment.usu_id),
+					estado_pago = payment.pst_id,
 					concepto = payment.pay_concepto,
 					monto = this.ConvertIntToString(payment.pay_monto),
 					producto = this.ConvertProductoCode(payment.pay_producto),
@@ -108,7 +113,7 @@ namespace DACServices.Api.Models
 					url_formulario = payment.pay_url_formulario,
 					emails = payment.pay_email_to,
 					emails_enviados = payment.pay_cantidad_mails_enviados,
-					estado_pago = payment.pay_estado_pago,
+					informacion_adicional = payment.pay_informacion_adicional,
 					fecha = payment.pay_fecha.ToString("dd/MM/yyyy HH:mm:ss")
 				};
 

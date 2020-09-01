@@ -121,7 +121,7 @@ namespace DACServices.Repositories.Vendor.NpsVendor.Payment
 
 		#region Consultar Transacción
 
-		public bool ConsultarEstadoDelPago(string psp_TransactionId, string psp_MerchTxRef, tbPaymentDetail paymentDetail)
+		public tbPayment ConsultarEstadoDelPago(string psp_TransactionId, string psp_MerchTxRef, tbPaymentDetail paymentDetail)
 		{
 			try
 			{
@@ -139,11 +139,11 @@ namespace DACServices.Repositories.Vendor.NpsVendor.Payment
 			}
 		}
 
-		private bool RequestSimpleQueryTx(NpsModel model)
+		private tbPayment RequestSimpleQueryTx(NpsModel model)
 		{
 			try
 			{
-				bool estadoDelPago = false;
+				tbPayment paymentResult = new tbPayment();
 				//var proxy = new NpsService.PaymentServicePlatformPortTypeClient("PaymentServicePlatformPort");
 
 				System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
@@ -154,7 +154,7 @@ namespace DACServices.Repositories.Vendor.NpsVendor.Payment
 				RespuestaStruct_SimpleQueryTx result = new RespuestaStruct_SimpleQueryTx();
 				RequerimientoStruct_SimpleQueryTx query = new RequerimientoStruct_SimpleQueryTx();
 				query = GetRequestSimpleQueryTx(model);
-				
+
 				this.AuditRequestResponse(JsonConvert.SerializeObject(query));
 				result = client.SimpleQueryTx(query);
 				this.AuditRequestResponse(JsonConvert.SerializeObject(result));
@@ -163,22 +163,41 @@ namespace DACServices.Repositories.Vendor.NpsVendor.Payment
 				_paymentDetail.pde_vendor_response_status = result.psp_ResponseCod;
 
 				//Valido si el codigo de respuesta del simple query es OK = 2
-				//y el codigo de la transaccion=0 "Compra online aprobada", retorno true, sino false
-				//result.psp_Transaction.psp_ResponseCod = 0 (Pago aceptado)
-				//result.psp_Transaction.psp_ResponseCod = 9 (Pago rechazado)
-				//result.psp_Transaction.psp_ResponseCod = 1 (Formulario en curso)
 				if (Int32.Parse(result.psp_ResponseCod).Equals(2))
 				{
-					if (result.psp_Transaction != null &&
-						Int32.Parse(result.psp_Transaction.psp_ResponseCod).Equals(0))
+					if (result.psp_Transaction != null)
 					{
-						estadoDelPago = true;
+						int responseCode = Int32.Parse(result.psp_Transaction.psp_ResponseCod);
+						//y el codigo de la transaccion=0 "Compra online aprobada"
+						//result.psp_Transaction.psp_ResponseCod = 0 (Pago aceptado)
+						//result.psp_Transaction.psp_ResponseCod = 9 (Pago rechazado)
+						//result.psp_Transaction.psp_ResponseCod = 25 (Formulario en curso)
+						//result.psp_Transaction.psp_ResponseCod = 3 (fondos insuficientes)
+						//result.psp_Transaction.psp_ResponseCod = 9 (form vencido)
+						switch (responseCode)
+						{
+							case 0:
+								{
+									paymentResult.pst_id = (int)EnumPaymentStatus.PAGADO;
+									paymentResult.pay_informacion_adicional = result.psp_Transaction.psp_ResponseMsg;
+									break;
+								}
+							default:
+								{
+									paymentResult.pst_id = (int)EnumPaymentStatus.ERROR;
+									paymentResult.pay_informacion_adicional = 
+										result.psp_Transaction.psp_ResponseMsg + " | " + 
+											result.psp_Transaction.psp_ResponseExtended;
+									break;
+								}
+						}
+
 						//Estoy actualizando por referencia los valores de los campos dentro del registro tbPaymentDetails
 						_paymentDetail.pde_vendor_response_id = result.psp_Transaction.psp_TransactionId;
 					}
 				}
 
-				return estadoDelPago;
+				return paymentResult;
 			}
 			catch (Exception ex)
 			{

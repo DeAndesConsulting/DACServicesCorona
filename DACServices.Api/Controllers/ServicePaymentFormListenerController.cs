@@ -43,9 +43,11 @@ namespace DACServices.Api.Controllers
 				//Esta parseo deberia ir, se deja el de arriba solo par avanzar el desarrollo
 				//int idPayment = Int32.Parse(model.psp_MerchTxRef);
 
-				//Antes de hacer un hit en NPS consulto el estado del pago, si es true es pq ya se catualizo
+				//Antes de hacer un hit en NPS consulto el estado del pago, si es true es pq ya se actualizo
 				tbPayment paymentStatus = this.GetPayment(idPayment);
-				if (!paymentStatus.pay_estado_pago)
+
+				//consulto si no se proceso, si ya fue procesado no hiteo nps y retorno el valor (ya procesado)
+				if (paymentStatus.pst_id == (int)EnumPaymentStatus.PENDIENTE)
 				{
 					//Si es falso, deberia analizar si hubo algun error de tarjeta y demas
 					//Ese desarrollo esta pendiente, lo de abajo se deberia ejecutar igual para acualizar o no
@@ -60,10 +62,11 @@ namespace DACServices.Api.Controllers
 				{
 					paymentResult = paymentStatus;
 				}
-				//// now redirect
+
+				//now redirect
 				var response = Request.CreateResponse(HttpStatusCode.Moved);
-				response.Headers.Location = 
-					new Uri(ConfigurationManager.AppSettings["RESPONSE_SERVER"] + paymentResult.pay_estado_pago.ToString());
+				response.Headers.Location =
+					new Uri(ConfigurationManager.AppSettings["RESPONSE_SERVER"] + paymentResult.pst_id.ToString());
 				return response;
 			}
 			catch (Exception ex)

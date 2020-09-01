@@ -92,14 +92,15 @@ namespace DACServices.Business.Service
 				//Actualizo el payment con el formulario de pagos si no retorno nulo
 				if (!string.IsNullOrEmpty(urlPaymentForm))
 				{
-					//Actualizo payment con el formulario de pago
-					payment.pay_url_formulario = urlPaymentForm;
-					payment = this.UpdatePayment(payment);
-
-					//Estoy almacenando el codigo de errror en urlPayment si NPS arrojar error. Ej trx duplicada
-					//Entonces para el envio del mail, valido que urlPaymentForm contenga http
+					//Valido que NPS retorne una url, sino es porque arrojo error y lo dejo registrado en tbPayment
+					//y no envío el mail
 					if (urlPaymentForm.Contains("http"))
 					{
+						//Actualizo payment con el formulario de pago
+						payment.pay_url_formulario = urlPaymentForm;
+						payment.pst_id = (int)EnumPaymentStatus.PENDIENTE;
+						payment = this.UpdatePayment(payment);
+
 						//Asigno la url del formulario de pago de la app cliente
 						string vueAppUrl = ConfigurationManager.AppSettings["VUE_APP_URL_FORM"] + "/" + payment.pay_id.ToString();
 						//envio e-mail
@@ -107,6 +108,13 @@ namespace DACServices.Business.Service
 
 						//Actualizo payment con el contador de envio de mails
 						payment.pay_cantidad_mails_enviados++;
+						payment = this.UpdatePayment(payment);
+					}
+					else
+					{
+						//Actualizo payment con el error que arrojo NPS
+						payment.pay_informacion_adicional = urlPaymentForm;
+						payment.pst_id = (int)EnumPaymentStatus.ERROR;
 						payment = this.UpdatePayment(payment);
 					}
 				}
@@ -160,12 +168,12 @@ namespace DACServices.Business.Service
 				tbPayment payment = new tbPayment()
 				{
 					usu_id = _idUser,
+					pst_id = (int)EnumPaymentStatus.PROCESANDO,
 					pay_concepto = _concepto,
 					pay_monto = _monto,
 					pay_producto = _producto,
 					pay_cuotas = _cuotas,
 					pay_email_to = _email,
-					pay_estado_pago = false,
 					pay_fecha = DateTime.Now
 				};
 				payment = paymentBusiness.Create(payment) as tbPayment;

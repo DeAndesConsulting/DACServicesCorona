@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EnumPaymentStatus.cs" />
     <Compile Include="ItrisAuthenticateEntity.cs" />
     <Compile Include="Service\DB_DACSModel.cs">
       <DependentUpon>DB_DACSModel.tt</DependentUpon>
@@ -76,6 +77,9 @@
       <DependentUpon>DB_DACSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Service\tbPaymentDetail.cs">
+      <DependentUpon>DB_DACSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Service\tbPaymentStatus.cs">
       <DependentUpon>DB_DACSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Service\tbPregunta.cs">

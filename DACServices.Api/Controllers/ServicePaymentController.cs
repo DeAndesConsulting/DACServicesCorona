@@ -11,6 +11,7 @@ using System.Web.Http;
 
 namespace DACServices.Api.Controllers
 {
+	[Authorize]
 	public class ServicePaymentController : ApiController
 	{
 		private ILog log = LogManager.GetLogger(typeof(ServicePaymentController));

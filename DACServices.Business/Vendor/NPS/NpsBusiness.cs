@@ -29,7 +29,7 @@ namespace DACServices.Business.Vendor.NPS
 			}
 		}
 
-		public bool ConsultarEstadoDelPago(string psp_TransactionId, int psp_merchantTxReference, 
+		public tbPayment ConsultarEstadoDelPago(string psp_TransactionId, int psp_merchantTxReference, 
 			tbPaymentDetail paymentDetail)
 		{
 			string transactionId = psp_TransactionId;

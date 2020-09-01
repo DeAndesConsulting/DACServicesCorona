@@ -28,6 +28,7 @@ namespace DACServices.Api.Models
 				this.emails = modelForm.emails;
 				this.emails_enviados = modelForm.emails_enviados;
 				this.estado_pago = modelForm.estado_pago;
+				this.informacion_adicional = modelForm.informacion_adicional;
 				this.fecha = modelForm.fecha;
 
 				return this;

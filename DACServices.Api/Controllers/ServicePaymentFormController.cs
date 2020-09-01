@@ -48,7 +48,7 @@ namespace DACServices.Api.Controllers
 				else
 					response = model.ConvertPaymentToModel(this.CreatePayment(payment));
 
-				if (!string.IsNullOrEmpty(response.url_formulario))
+				if (response.id != 0)
 					return Request.CreateResponse(HttpStatusCode.Created, response);
 
 				return Request.CreateResponse(HttpStatusCode.Conflict);

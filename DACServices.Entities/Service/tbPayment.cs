@@ -22,6 +22,7 @@ namespace DACServices.Entities
     
         public int pay_id { get; set; }
         public int usu_id { get; set; }
+        public int pst_id { get; set; }
         public string pay_concepto { get; set; }
         public int pay_monto { get; set; }
         public int pay_producto { get; set; }
@@ -29,9 +30,10 @@ namespace DACServices.Entities
         public string pay_url_formulario { get; set; }
         public string pay_email_to { get; set; }
         public int pay_cantidad_mails_enviados { get; set; }
-        public bool pay_estado_pago { get; set; }
+        public string pay_informacion_adicional { get; set; }
         public System.DateTime pay_fecha { get; set; }
     
+        public virtual tbPaymentStatus tbPaymentStatus { get; set; }
         public virtual tbUsuario tbUsuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbPaymentDetail> tbPaymentDetail { get; set; }

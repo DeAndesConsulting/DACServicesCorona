@@ -35,6 +35,7 @@ namespace DACServices.Repositories
         public virtual DbSet<tbPaciente> tbPaciente { get; set; }
         public virtual DbSet<tbPayment> tbPayment { get; set; }
         public virtual DbSet<tbPaymentDetail> tbPaymentDetail { get; set; }
+        public virtual DbSet<tbPaymentStatus> tbPaymentStatus { get; set; }
         public virtual DbSet<tbPregunta> tbPregunta { get; set; }
         public virtual DbSet<tbRequest> tbRequest { get; set; }
         public virtual DbSet<tbRequestPaymentVendor> tbRequestPaymentVendor { get; set; }

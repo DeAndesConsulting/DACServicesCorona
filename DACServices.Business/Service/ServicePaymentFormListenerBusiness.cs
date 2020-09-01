@@ -33,7 +33,7 @@ namespace DACServices.Business.Service
 
 			//Consulto el estado del pago
 			NpsBusiness npsBusiness = new NpsBusiness();
-			bool estadoDelPago = npsBusiness.ConsultarEstadoDelPago(_transactionId, _idPayment, paymentDetailSimpleQuery);
+			tbPayment paymentNpsResult = npsBusiness.ConsultarEstadoDelPago(_transactionId, _idPayment, paymentDetailSimpleQuery);
 
 			//Actualizo tbPaymentDetails
 			paymentDetailSimpleQuery = this.UpdatePaymentDetail(paymentDetailSimpleQuery);
@@ -41,8 +41,9 @@ namespace DACServices.Business.Service
 			//Obtengo el registro del pago
 			tbPayment payment = this.ObtengoPaymentPorId();
 
-			//Actualizo registro del pago, con estado del pago
-			payment.pay_estado_pago = estadoDelPago;
+			//Actualizo registro del pago, con estado del pago y la informacion adicional
+			payment.pst_id = paymentNpsResult.pst_id;
+			payment.pay_informacion_adicional = paymentNpsResult.pay_informacion_adicional;
 			payment = this.UpdatePayment(payment);
 
 			return payment;

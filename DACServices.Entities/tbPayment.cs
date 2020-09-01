@@ -43,8 +43,8 @@ namespace DACServices.Entities
 		[DataMember(EmitDefaultValue = true)]
 		public int pay_cantidad_mails_enviados { get; set; }
 
-		[DataMember(EmitDefaultValue = true)]
-		public bool pay_estado_pago { get; set; }
+		[DataMember(EmitDefaultValue = false)]
+		public string pay_informacion_adicional { get; set; }
 
 		[DataMember(EmitDefaultValue = false)]
 		public System.DateTime pay_fecha { get; set; }
