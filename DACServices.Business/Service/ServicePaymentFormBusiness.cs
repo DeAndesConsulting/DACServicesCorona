@@ -96,13 +96,15 @@ namespace DACServices.Business.Service
 					//y no envío el mail
 					if (urlPaymentForm.Contains("http"))
 					{
+						//Asigno la url del formulario de pago de la app cliente
+						string vueAppUrl = ConfigurationManager.AppSettings["VUE_APP_URL_FORM"] + "/" + payment.pay_id.ToString();
+
 						//Actualizo payment con el formulario de pago
 						payment.pay_url_formulario = urlPaymentForm;
+						payment.pay_url_formulario_custom = vueAppUrl;
 						payment.pst_id = (int)EnumPaymentStatus.PENDIENTE;
 						payment = this.UpdatePayment(payment);
 
-						//Asigno la url del formulario de pago de la app cliente
-						string vueAppUrl = ConfigurationManager.AppSettings["VUE_APP_URL_FORM"] + "/" + payment.pay_id.ToString();
 						//envio e-mail
 						this.SendEmamil(vueAppUrl);
 

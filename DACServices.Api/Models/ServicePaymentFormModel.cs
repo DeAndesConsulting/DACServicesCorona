@@ -35,6 +35,9 @@ namespace DACServices.Api.Models
 		public string url_formulario { get; set; }
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+		public string url_formulario_custom { get; set; }
+
+		[JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
 		public string emails { get; set; }
 
 		[JsonProperty(NullValueHandling = NullValueHandling.Include)]
@@ -82,7 +85,7 @@ namespace DACServices.Api.Models
 					monto = this.ConvertIntToString(payment.pay_monto),
 					producto = this.ConvertProductoCode(payment.pay_producto),
 					cuotas = payment.pay_cuotas,
-					url_formulario = payment.pay_url_formulario,
+					url_formulario_custom = payment.pay_url_formulario_custom,
 					emails = payment.pay_email_to,
 					emails_enviados = payment.pay_cantidad_mails_enviados,
 					informacion_adicional = payment.pay_informacion_adicional,
@@ -111,6 +114,7 @@ namespace DACServices.Api.Models
 					producto = this.ConvertProductoCode(payment.pay_producto),
 					cuotas = payment.pay_cuotas,
 					url_formulario = payment.pay_url_formulario,
+					url_formulario_custom = payment.pay_url_formulario_custom,
 					emails = payment.pay_email_to,
 					emails_enviados = payment.pay_cantidad_mails_enviados,
 					informacion_adicional = payment.pay_informacion_adicional,

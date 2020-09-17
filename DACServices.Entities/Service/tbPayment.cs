@@ -28,6 +28,7 @@ namespace DACServices.Entities
         public int pay_producto { get; set; }
         public int pay_cuotas { get; set; }
         public string pay_url_formulario { get; set; }
+        public string pay_url_formulario_custom { get; set; }
         public string pay_email_to { get; set; }
         public int pay_cantidad_mails_enviados { get; set; }
         public string pay_informacion_adicional { get; set; }
