@@ -71,6 +71,28 @@ namespace DACServices.Api.Models
 			//Agrego padre a menu principal
 			menu.Add(menuFather);
 
+			//creo padre payments: op. de menu new develop
+			menuFather = new MenuFather();
+			menuFather.icon = "mdi-chevron-up";
+			menuFather.icon_alt = "mdi-chevron-down";
+			menuFather.text = "Inicio";
+			//creo lista hijos
+			menuFather.children = new List<MenuChild>();
+			//creo hijo
+			menuChild = new MenuChild();
+			menuChild.text = "Mi wallet";
+			menuChild.path = "/mywallet";
+			//agrego hijo a padre
+			menuFather.children.Add(menuChild);
+			//creo hijo
+			menuChild = new MenuChild();
+			menuChild.text = "Mi código Qr";
+			menuChild.path = "/myqrcode";
+			//agrego hijo a padre
+			menuFather.children.Add(menuChild);
+			//Agrego padre a menu principal
+			menu.Add(menuFather);
+
 			return menu;
 		}
 	}
