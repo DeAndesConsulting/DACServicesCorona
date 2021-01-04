@@ -191,6 +191,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ArticuloController.cs" />
+    <Compile Include="Controllers\ItrisPedidoMockController.cs" />
+    <Compile Include="Controllers\ItrisPedidosController.cs" />
     <Compile Include="Controllers\RelevamientoController.cs" />
     <Compile Include="Controllers\ServiceBaseController.cs" />
     <Compile Include="Controllers\ServiceFormularioController.cs" />
@@ -242,6 +244,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\ItrisPedidoMock\" />
+    <Folder Include="Views\ItrisPedidos\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DACServices.Business\DACServices.Business.csproj">

@@ -57,6 +57,7 @@
     <Compile Include="Service\ServicePaymentDetailBusiness.cs" />
     <Compile Include="Service\ServicePaymentFormBusiness.cs" />
     <Compile Include="Service\ServicePaymentFormListenerBusiness.cs" />
+    <Compile Include="Service\ServicePedidosBusiness.cs" />
     <Compile Include="Service\ServicePreguntaBusiness.cs" />
     <Compile Include="Service\ServiceRelevamientoBusiness.cs" />
     <Compile Include="Service\ServiceRequestBusiness.cs" />

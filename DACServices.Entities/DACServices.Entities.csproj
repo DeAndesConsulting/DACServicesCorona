@@ -111,6 +111,7 @@
     <Compile Include="Vendor\Clases\ItrisErpEmpresasEntity.cs" />
     <Compile Include="Vendor\Clases\ItrisErpLocalidadesEntity.cs" />
     <Compile Include="Vendor\Clases\ItrisEstadoEmailRelevamientoEntity.cs" />
+    <Compile Include="Vendor\Clases\ItrisPedidoEntity.cs" />
     <Compile Include="Vendor\Clases\ItrisPlanillaEntity.cs" />
     <Compile Include="Vendor\Clases\ItrisRelevamientoArticuloEntity.cs" />
     <Compile Include="Vendor\Clases\ItrisRelevamientoEntity.cs" />

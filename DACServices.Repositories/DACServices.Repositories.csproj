@@ -88,6 +88,7 @@
     <Compile Include="Service\ServicePacienteRepository.cs" />
     <Compile Include="Service\ServicePaymentDetailRepository.cs" />
     <Compile Include="Service\ServicePaymentRepository.cs" />
+    <Compile Include="Service\ServicePedidosRepository.cs" />
     <Compile Include="Service\ServicePreguntaRepository.cs" />
     <Compile Include="Service\ServiceRequestPaymentVendorRepository.cs" />
     <Compile Include="Service\ServiceRequestRepository.cs" />
