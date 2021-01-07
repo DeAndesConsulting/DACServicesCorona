@@ -25,7 +25,7 @@ namespace DACServices.Mock
                 ID = 1,
                 FK_ERP_EMPRESAS = "14200",
                 FK_ERP_ASESORES = 33,
-                FECHA = "01 /01/2001 17:29:31",
+                FECHA = "01 /01/2001 17:29:31", 
                 ESTADO = "ENVIANDO",
                 CODIGO = "ASD123ADSASD"
             };
@@ -33,32 +33,28 @@ namespace DACServices.Mock
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "NARANJA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 1
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "UVA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 2
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "LIMA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 1
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "POMELO",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 2
             };
             _articulos.Add(articulos);
             _pedido.Pedido = pedido;
@@ -74,7 +70,7 @@ namespace DACServices.Mock
                 ID = 2,
                 FK_ERP_EMPRESAS = "14200",
                 FK_ERP_ASESORES = 33,
-                FECHA = "01 /01/2001 17:29:31",
+                FECHA = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"),
                 ESTADO = "PROCESANDO",
                 CODIGO = "ASD123ADSASD"
             };
@@ -82,32 +78,28 @@ namespace DACServices.Mock
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "UVA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 4
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "UVA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 1
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "MELON",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 2
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "ZANDIA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 1
             };
             _articulos.Add(articulos);
             _pedido.Pedido = pedido;
@@ -122,7 +114,7 @@ namespace DACServices.Mock
                 ID = 3,
                 FK_ERP_EMPRESAS = "14200",
                 FK_ERP_ASESORES = 33,
-                FECHA = "01 /01/2001 17:29:31",
+                FECHA = "01/01/2001 17:29:31",
                 ESTADO = "DESPACHADO",
                 CODIGO = "ASD123ADSASD"
             };
@@ -130,32 +122,28 @@ namespace DACServices.Mock
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "CEREZA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 1
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "TONICA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 3
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "COLA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 3
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "POMELO",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 1
             };
             _articulos.Add(articulos);
             _pedido.Pedido = pedido;
@@ -170,7 +158,7 @@ namespace DACServices.Mock
                 ID = 4,
                 FK_ERP_EMPRESAS = "14200",
                 FK_ERP_ASESORES = 33,
-                FECHA = "01 /01/2001 17:29:31",
+                FECHA = "03/01/2001 17:29:31",
                 ESTADO = "ENTREGADO",
                 CODIGO = "ASD123ADSASD"
             };
@@ -178,32 +166,28 @@ namespace DACServices.Mock
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "ANANA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 1
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "UVA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 2
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "NARANJA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 1
             };
             _articulos.Add(articulos);
 
             articulos = new PedidoArticulo()
             {
                 FK_ARTICULOS = 26,
-                SABOR = "COLA",
-                CANTIDAD = "1 PALLET"
+                CANTIDAD = 1
             };
             _articulos.Add(articulos);
             _pedido.Pedido = pedido;
@@ -218,15 +202,19 @@ namespace DACServices.Mock
                 _instancia = new PedidosMock();
             return _instancia;
         }
-        public List<ItrisPedidoEntity> Get(int id)
+        public ItrisPedidoEntity Get(int id)
         {
-            return _pedidos.Where(x => x.Pedido.FK_ERP_EMPRESAS == id.ToString()).ToList();
+            return _pedidos.Where(x => x.Pedido.ID == id).FirstOrDefault();
         }
 
-
+        public List<ItrisPedidoEntity> Get()
+        {
+            return _pedidos.ToList();
+        }
         public ItrisPedidoEntity Create(ItrisPedidoEntity obj)
         {
             obj.Pedido.ID = _pedidos.OrderByDescending(x => x.Pedido.ID).FirstOrDefault().Pedido.ID + 1;
+            obj.Pedido.FECHA = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
             obj.Pedido.ESTADO = "PROCESANDO";
 
             _pedidos.Add(obj);
@@ -234,9 +222,9 @@ namespace DACServices.Mock
         }
 
 
-        public ItrisPedidoEntity Delete(ItrisPedidoEntity obj)
+        public ItrisPedidoEntity Delete(int id)
         {
-            var result = _pedidos.Where(x => x.Pedido.ID == obj.Pedido.ID).FirstOrDefault();
+            var result = _pedidos.Where(x => x.Pedido.ID == id).FirstOrDefault();
             if (result != null)
                 _pedidos.Remove(result);
             return result;

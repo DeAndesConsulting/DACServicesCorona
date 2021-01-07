@@ -21,8 +21,7 @@ namespace DACServices.Entities.Vendor.Clases
     public class PedidoArticulo
     {
         public int FK_ARTICULOS { get; set; }
-        public string SABOR { get; set; }
-        public string CANTIDAD { get; set; }
+        public int CANTIDAD { get; set; }
     }
 
 

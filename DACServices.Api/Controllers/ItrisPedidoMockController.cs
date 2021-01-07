@@ -10,7 +10,8 @@ namespace DACServices.Api.Controllers
 {
 	public class ItrisPedidoMockController : ApiController
 	{
-		private List<ItrisPedidoEntity> listaMock = PedidosMock.Instancia().Get(1);
+		private List<ItrisPedidoEntity> listaMock = PedidosMock.Instancia().Get();
+		ItrisPedidoEntity pedidoMock;
 
 		[HttpGet]
 		public object Get(int id)
@@ -19,7 +20,29 @@ namespace DACServices.Api.Controllers
 			{
 				ItrisPedidoEntity model = new ItrisPedidoEntity();
 
-				listaMock = PedidosMock.Instancia().Get(id);
+				pedidoMock = PedidosMock.Instancia().Get(id);
+
+
+				if (pedidoMock != null)
+					return Request.CreateResponse(HttpStatusCode.OK, pedidoMock);
+
+				return Request.CreateResponse(HttpStatusCode.NotFound);
+			}
+			catch (Exception ex)
+			{
+
+				throw ex;
+			}
+		}
+
+
+		public object Get()
+		{
+			try
+			{
+				ItrisPedidoEntity model = new ItrisPedidoEntity();
+
+				listaMock = PedidosMock.Instancia().Get();
 
 
 				if (listaMock != null)
@@ -33,9 +56,6 @@ namespace DACServices.Api.Controllers
 				throw ex;
 			}
 		}
-
-
-
 		[HttpPost]
 		public object Post(ItrisPedidoEntity model)
 		{
@@ -80,13 +100,13 @@ namespace DACServices.Api.Controllers
 		}
 
 		[HttpDelete]
-		public object Delete(ItrisPedidoEntity obj)
+		public object Delete(int id)
 		{
 			try
 			{
 				ItrisPedidoEntity model = new ItrisPedidoEntity();
 
-				model = PedidosMock.Instancia().Delete(obj);
+				model = PedidosMock.Instancia().Delete(id);
 
 
 				if (model != null)
