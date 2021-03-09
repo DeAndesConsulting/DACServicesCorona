@@ -8,6 +8,8 @@ using System.Security.Claims;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security;
 using DACServices.Repositories;
+using DACServices.Business.Service;
+using DACServices.Entities;
 
 namespace DACServices.Api.Helpers.OAuth2
 {
@@ -18,7 +20,8 @@ namespace DACServices.Api.Helpers.OAuth2
         /// <summary>
         /// Propiedad para las entities de la base de datos
         /// </summary>
-        private DB_DACSEntities databaseManager = new DB_DACSEntities();   
+        private DB_DACSEntities databaseManager = new DB_DACSEntities();
+        private ServiceUsuarioBusiness usuarioBusiness = new ServiceUsuarioBusiness();
 
         public DACOAuthProvider(string publicClientId)
         {
@@ -100,6 +103,12 @@ namespace DACServices.Api.Helpers.OAuth2
         /// <returns>Returns validation of client authentication</returns>
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
+            //Para obtener el client id desde el request wwwwurlencode
+            //string client_id = string.Empty;
+            //string client_secret = string.Empty;
+            //context.TryGetFormCredentials(out client_id, out client_secret);
+            //string token = context.Parameters.Get("refresh_token");
+            
             //Resource owner password credentials does not provider a client ID
             if (context.ClientId == null)
                 context.Validated();
@@ -143,5 +152,31 @@ namespace DACServices.Api.Helpers.OAuth2
             //return info
             return new AuthenticationProperties(data);
         }
-    }
+
+		public override Task GrantRefreshToken(OAuthGrantRefreshTokenContext context)
+		{
+			//return base.GrantRefreshToken(context);
+			var originalClient = context.Ticket.Properties.Dictionary["userName"];
+            //var currentCliente = context.ClientId;
+
+            //Valido que el user este activo, con usuario mock no se va a usar
+            //Func<tbUsuario, bool> func = x => x.usu_usuario == originalClient;
+            //var listaUsuario = usuarioBusiness.Read(func) as List<tbUsuario>;
+            //var usuario = listaUsuario.FirstOrDefault();
+            //if (!usuario.usu_active)
+            //{
+            //	context.SetError("invalid_refresh_token", "Refresh token is issued for inactive user.");
+            //	return Task.FromResult<object>(null);
+            //}
+            //Valido que el user este activo, con usuario mock no se va a usar
+
+            var newIdentity = new ClaimsIdentity(context.Ticket.Identity);
+            newIdentity.AddClaim(new Claim("newClaim", "newValue"));
+
+            var newTicket = new AuthenticationTicket(newIdentity, context.Ticket.Properties);
+            context.Validated(newTicket);
+
+            return Task.FromResult<object>(null);
+		}
+	}
 }

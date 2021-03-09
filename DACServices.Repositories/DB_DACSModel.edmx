@@ -130,6 +130,8 @@
           <Property Name="com_id" Type="int" />
           <Property Name="usu_usuario" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="usu_password" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="usu_refresh_token" Type="nvarchar" MaxLength="500" />
+          <Property Name="usu_active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tbVendor">
           <Key>
@@ -506,6 +508,8 @@
           <Property Name="com_id" Type="Int32" />
           <Property Name="usu_usuario" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="usu_password" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="usu_refresh_token" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="usu_active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="tbComercio" Relationship="DB_DACSModel.FK_tbUsuario_tbComercio" FromRole="tbUsuario" ToRole="tbComercio" />
           <NavigationProperty Name="tbPayment" Relationship="DB_DACSModel.FK_tbPayment_tbUsuario" FromRole="tbUsuario" ToRole="tbPayment" />
         </EntityType>
@@ -771,6 +775,8 @@
           <EntitySetMapping Name="tbUsuario">
             <EntityTypeMapping TypeName="DB_DACSModel.tbUsuario">
               <MappingFragment StoreEntitySet="tbUsuario">
+                <ScalarProperty Name="usu_active" ColumnName="usu_active" />
+                <ScalarProperty Name="usu_refresh_token" ColumnName="usu_refresh_token" />
                 <ScalarProperty Name="usu_password" ColumnName="usu_password" />
                 <ScalarProperty Name="usu_usuario" ColumnName="usu_usuario" />
                 <ScalarProperty Name="com_id" ColumnName="com_id" />

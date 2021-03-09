@@ -24,6 +24,8 @@ namespace DACServices.Entities
         public Nullable<int> com_id { get; set; }
         public string usu_usuario { get; set; }
         public string usu_password { get; set; }
+        public string usu_refresh_token { get; set; }
+        public bool usu_active { get; set; }
     
         public virtual tbComercio tbComercio { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

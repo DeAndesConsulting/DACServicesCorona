@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="DB_DACSModel.tbPregunta" Width="1.5" PointX="3" PointY="11.75" />
         <EntityTypeShape EntityType="DB_DACSModel.tbRequest" Width="1.5" PointX="9.75" PointY="7.25" />
         <EntityTypeShape EntityType="DB_DACSModel.tbRequestPaymentVendor" Width="1.5" PointX="12" PointY="3.5" />
-        <EntityTypeShape EntityType="DB_DACSModel.tbUsuario" Width="1.5" PointX="5.25" PointY="3.5" />
+        <EntityTypeShape EntityType="DB_DACSModel.tbUsuario" Width="1.5" PointX="5.25" PointY="3.25" />
         <EntityTypeShape EntityType="DB_DACSModel.tbVendor" Width="1.5" PointX="0.75" PointY="3.625" />
         <AssociationConnector Association="DB_DACSModel.FK_tbComercio_tbVendor" />
         <AssociationConnector Association="DB_DACSModel.FK_tbUsuario_tbComercio" />

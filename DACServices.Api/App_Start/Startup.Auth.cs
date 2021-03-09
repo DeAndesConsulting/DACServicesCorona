@@ -47,7 +47,8 @@ namespace DACServices.Api
                 Provider = new DACOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromHours(4),
-                AllowInsecureHttp = true //Do not do this in production ONLY FOR DEVELOPING: ALLOW INSECURE HTTP!!
+                AllowInsecureHttp = true, //Do not do this in production ONLY FOR DEVELOPING: ALLOW INSECURE HTTP!!
+                RefreshTokenProvider = new DACRefreshTokenProvider()
             };
 
             //Enabled application to use bearer tokens to authenticate users

@@ -212,6 +212,7 @@
     </Compile>
     <Compile Include="Helpers\OAuth2\CustomRoles.cs" />
     <Compile Include="Helpers\OAuth2\DACOAuthProvider.cs" />
+    <Compile Include="Helpers\OAuth2\DACRefreshTokenProvider.cs" />
     <Compile Include="Models\FormularioModel.cs" />
     <Compile Include="Models\ServicePaymentFormListenerModel.cs" />
     <Compile Include="Models\ServicePaymentFormModel.cs" />
